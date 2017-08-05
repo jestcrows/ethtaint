@@ -56,6 +56,15 @@ test('add taint', t => {
 })
 
 /**
+ * Chain after adding taint item.
+ */
+test('chain add taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  t.true(address.addTaint(taintItem) === address)
+})
+
+/**
  * Count of acquired taint.
  */
 test('count taint', t => {
