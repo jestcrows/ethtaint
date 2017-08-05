@@ -9,5 +9,10 @@
     "ava": "^0.21.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.2"
+  },
+  "standard": {
+    "ignore": [
+      "test"
+    ]
   }
 }
