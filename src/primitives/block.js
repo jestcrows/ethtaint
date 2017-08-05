@@ -23,6 +23,16 @@ class Block {
     privs.set(this, priv)
     priv.number = number
   }
+
+  /**
+   * Block number.
+   * @type {number}
+   */
+  get number () {
+    const priv = privs.get(this)
+    const number = priv.number
+    return number
+  }
 }
 
 // Expose
