@@ -51,6 +51,24 @@ class Taint {
       return new Set(recipients)
     }
   }
+
+  /**
+   * Add recipient.
+   * @param recipient {Address} - Recipient of taint.
+   * @return {Taint} - This instance for chaining.
+   */
+  addRecipient (recipient) {
+    // Validate arguments
+    arg.Address(recipient)
+
+    const priv = privs.get(this)
+    if (priv.recipients === null) {
+      priv.recipients = new Set()
+    }
+    const recipients = priv.recipients
+    recipients.add(recipient)
+    return this
+  }
 }
 
 // Expose
