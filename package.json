@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "Unlicense",
   "devDependencies": {
+    "snazzy": "^7.0.0",
     "standard": "^10.0.2"
   }
 }
