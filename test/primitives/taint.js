@@ -33,8 +33,8 @@ test('create', t => {
  */
 test('get source', t => {
   const source = new Address(testAddress)
-  const taint = new Taint(source)
-  const taintSource = taint.source
+  const taintItem = new Taint(source)
+  const taintSource = taintItem.source
   t.true(taintSource.hex === source.hex)
 })
 
@@ -43,9 +43,9 @@ test('get source', t => {
  */
 test('source protected', t => {
   const source = new Address(testAddress)
-  const taint = new Taint(source)
+  const taintItem = new Taint(source)
   t.throws(() => {
-    taint.source = {}
+    taintItem.source = {}
   })
 })
 
