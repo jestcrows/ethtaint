@@ -16,11 +16,12 @@ const privs = new WeakMap()
  */
 class Block {
   /**
-   * No parameters.
+   * @param {number} number - Block number.
    */
-  constructor () {
+  constructor (number) {
     const priv = {}
     privs.set(this, priv)
+    priv.number = number
   }
 }
 
