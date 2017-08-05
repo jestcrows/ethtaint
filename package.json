@@ -1,6 +1,7 @@
 {
   "name": "ethtaint",
   "version": "0.1.0",
+  "license": "Unlicense",
   "devDependencies": {
     "standard": "^10.0.2"
   }
