@@ -37,15 +37,15 @@ class Address {
 
   /**
    * All collected taint.
-   * @type {Taint[]}
+   * @type {Set<Taint>}
    */
   get taint () {
     const priv = privs.get(this)
     const taint = priv.taint
     if (taint === null) {
-      return []
+      return new Set()
     } else {
-      return [...taint]
+      return new Set(taint)
     }
   }
 
@@ -60,10 +60,10 @@ class Address {
 
     const priv = privs.get(this)
     if (priv.taint === null) {
-      priv.taint = []
+      priv.taint = new Set()
     }
     const taint = priv.taint
-    taint.push(taintItem)
+    taint.add(taintItem)
     return this
   }
 }
