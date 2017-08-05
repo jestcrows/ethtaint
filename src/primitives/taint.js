@@ -31,6 +31,16 @@ class Taint {
     privs.set(this, priv)
     priv.source = source
   }
+
+  /**
+   * Source of taint.
+   * @type {Address}
+   */
+  get source () {
+    const priv = privs.get(this)
+    const source = priv.source
+    return source
+  }
 }
 
 // Expose

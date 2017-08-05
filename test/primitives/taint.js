@@ -27,3 +27,24 @@ test('create', t => {
     new Taint(source)
   })
 })
+
+/**
+ * Get source.
+ */
+test('get source', t => {
+  const source = new Address(testAddress)
+  const taint = new Taint(source)
+  const taintSource = taint.source
+  t.true(taintSource.hex === source.hex)
+})
+
+/**
+ * Cannot set source.
+ */
+test('cannot set source', t => {
+  const source = new Address(testAddress)
+  const taint = new Taint(source)
+  t.throws(() => {
+    taint.source = {}
+  })
+})
