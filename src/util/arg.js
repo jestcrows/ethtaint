@@ -8,6 +8,7 @@
 // Imports
 const type = {
   Address: require('../primitives/address'),
+  Block: require('../primitives/block'),
   Taint: require('../primitives/taint')
 }
 
@@ -20,6 +21,18 @@ const type = {
 exports.Address = function Address (arg) {
   if (!(arg instanceof type.Address)) {
     throw new Error('Argument must be Address')
+  }
+}
+
+/**
+ * Confirm argument is Block.
+ * @param {Block|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not a Block.
+ */
+exports.Block = function Block (arg) {
+  if (!(arg instanceof type.Block)) {
+    throw new Error('Argument must be Block')
   }
 }
 
