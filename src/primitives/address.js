@@ -45,7 +45,7 @@ class Address {
     if (taint === null) {
       return []
     } else {
-      return taint.slice()
+      return [...taint]
     }
   }
 
