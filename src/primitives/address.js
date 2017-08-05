@@ -23,6 +23,16 @@ class Address {
     privs.set(this, priv)
     priv.hex = hex
   }
+
+  /**
+   * Get hexadecimal representation.
+   * @return {string} - Hexadecimal representation of address.
+   */
+  get hex () {
+    const priv = privs.get(this)
+    const hex = priv.hex
+    return hex
+  }
 }
 
 // Expose
