@@ -13,8 +13,9 @@ const testAddress2 = '0xe2652A4d678208BbC7f72f92Fb87Ce885BBfBf2f'
  * Create a new address.
  */
 test('create', t => {
-  new Address(testAddress)
-  t.pass()
+  t.notThrows(() => {
+    new Address(testAddress)
+  })
 })
 
 /**
