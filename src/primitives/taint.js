@@ -69,6 +69,24 @@ class Taint {
     recipients.add(recipient)
     return this
   }
+
+  /**
+   * Check whether has recipient.
+   * @param address {Address} - Queried address.
+   * @return {boolean} - Whether has address as recipient.
+   */
+  hasRecipient (address) {
+    // Validate arguments
+    arg.Address(address)
+
+    const priv = privs.get(this)
+    const recipients = priv.recipients
+    if (recipients === null) {
+      return false
+    } else {
+      return recipients.has(address)
+    }
+  }
 }
 
 // Expose
