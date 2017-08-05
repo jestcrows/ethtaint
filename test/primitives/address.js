@@ -33,3 +33,12 @@ test('cannot set hex', t => {
     address.hex = 'test'
   })
 })
+
+/**
+ * Get empty taint.
+ */
+test('get empty taint', t => {
+  const address = new Address(testAddress)
+  const taint = address.taint
+  t.true(Array.isArray(taint) && taint.length === 0)
+})

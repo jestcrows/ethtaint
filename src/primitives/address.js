@@ -22,6 +22,7 @@ class Address {
     const priv = {}
     privs.set(this, priv)
     priv.hex = hex
+    priv.taint = null
   }
 
   /**
@@ -32,6 +33,20 @@ class Address {
     const priv = privs.get(this)
     const hex = priv.hex
     return hex
+  }
+
+  /**
+   * All collected taint.
+   * @type {Taint[]}
+   */
+  get taint () {
+    const priv = privs.get(this)
+    const taint = priv.taint
+    if (taint === null) {
+      return []
+    } else {
+      return taint.slice()
+    }
   }
 }
 
