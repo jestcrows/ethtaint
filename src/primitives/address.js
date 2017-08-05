@@ -48,7 +48,28 @@ class Address {
       return taint.slice()
     }
   }
+
+  /**
+   * Add taint item.
+   * @param taintItem {Taint} - Taint item.
+   * @return {Address} - This instance for chaining.
+   */
+  addTaint (taintItem) {
+    // Validate arguments
+    arg.Taint(taintItem)
+
+    const priv = privs.get(this)
+    if (priv.taint === null) {
+      priv.taint = []
+    }
+    const taint = priv.taint
+    taint.push(taintItem)
+    return this
+  }
 }
 
 // Expose
 module.exports = Address
+
+// Circular imports
+const arg = require('../util/arg')

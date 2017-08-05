@@ -3,6 +3,7 @@ import test from 'ava'
 
 // Imports
 import Address from '../../src/primitives/address'
+import Taint from '../../src/primitives/taint'
 
 // Test data
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
@@ -41,4 +42,36 @@ test('get empty taint', t => {
   const address = new Address(testAddress)
   const taint = address.taint
   t.true(Array.isArray(taint) && taint.length === 0)
+})
+
+/**
+ * Add taint item.
+ */
+test('add taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  t.notThrows(() => {
+    address.addTaint(taintItem)
+  })
+})
+
+/**
+ * Count of acquired taint.
+ */
+test('count taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  address.addTaint(taintItem)
+  t.true(address.taint.length === 1)
+})
+
+/**
+ * Access acquired taint.
+ */
+test('access taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  address.addTaint(taintItem)
+  const taint = address.taint
+  t.true(taint[0] === taintItem)
 })
