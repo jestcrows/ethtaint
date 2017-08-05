@@ -25,8 +25,8 @@ class Address {
   }
 
   /**
-   * Get hexadecimal representation.
-   * @return {string} - Hexadecimal representation of address.
+   * Hexadecimal representation.
+   * @type {string}
    */
   get hex () {
     const priv = privs.get(this)
