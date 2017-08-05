@@ -1,0 +1,23 @@
+root = true
+
+; Default
+[*]
+; Unix-style line breaks
+end_of_line = lf
+; End file with line break
+insert_final_newline = true
+; Use UTF-8 encoding
+charset = utf-8
+; Use space characters for indenting
+indent_style = space
+; Each indent is 2 space characters
+indent_size = true
+; No trailing whitespace on lines
+trim_trailing_whitespace = true
+
+; Markdown
+[*.md]
+; Trailing whitespace is significant
+trim_trailing_whitespace = false
+; Allow precise line control
+insert_final_newline = false
