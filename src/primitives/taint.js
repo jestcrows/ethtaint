@@ -5,9 +5,6 @@
 
 'use strict'
 
-// Imports
-const arg = require('../util/arg')
-
 /**
  * Private members store.
  * @private
@@ -43,3 +40,6 @@ class Taint {
 
 // Expose
 module.exports = Taint
+
+// Circular imports
+const arg = require('../util/arg')
