@@ -40,15 +40,15 @@ class Taint {
 
   /**
    * Recipients of taint. Excludes source.
-   * @type {Address[]}
+   * @type {Set<Address>}
    */
   get recipients () {
     const priv = privs.get(this)
     const recipients = priv.recipients
     if (recipients === null) {
-      return []
+      return new Set()
     } else {
-      return [...recipients]
+      return new Set(recipients)
     }
   }
 }

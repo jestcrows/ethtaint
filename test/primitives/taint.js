@@ -56,7 +56,7 @@ test('get empty recipients', t => {
   const source = new Address(testAddress)
   const taintItem = new Taint(source)
   const recipients = taintItem.recipients
-  t.true(Array.isArray(recipients) && recipients.length === 0)
+  t.true(recipients instanceof Set && recipients.size === 0)
 })
 
 /**
