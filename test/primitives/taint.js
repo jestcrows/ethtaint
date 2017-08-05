@@ -150,3 +150,48 @@ test('has added recipient', t => {
   taintItem.addRecipient(address2)
   t.true(taintItem.hasRecipient(address2))
 })
+
+/**
+ * Single address at start.
+ */
+test('start with single address', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const addresses = taintItem.addresses
+  t.true(addresses instanceof Set && addresses.size === 1)
+})
+
+/**
+ * Addresses protected.
+ */
+test('addresses protected', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  t.throws(() => {
+    taintItem.addresses = 'test'
+  })
+})
+
+/**
+ * Count of addresses.
+ */
+test('count addresses', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const address2 = new Address(testAddress2)
+  taintItem.addRecipient(address2)
+  t.true(taintItem.addresses.size === 2)
+})
+
+/**
+ * Access added address.
+ */
+test('access address', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const address2 = new Address(testAddress2)
+  taintItem.addRecipient(address2)
+  const addresses = taintItem.addresses
+  const values = [...addresses]
+  t.true(values[1] === address2)
+})

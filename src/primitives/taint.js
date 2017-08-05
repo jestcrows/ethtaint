@@ -53,6 +53,21 @@ class Taint {
   }
 
   /**
+   * Tainted addresses. Includes source.
+   * @type {Set<Address>}
+   */
+  get addresses () {
+    const priv = privs.get(this)
+    const source = priv.source
+    const recipients = priv.recipients
+    if (recipients === null) {
+      return new Set([source])
+    } else {
+      return new Set([source, ...recipients])
+    }
+  }
+
+  /**
    * Add recipient.
    * @param recipient {Address} - Recipient of taint.
    * @return {Taint} - This instance for chaining.
