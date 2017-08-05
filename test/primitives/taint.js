@@ -39,9 +39,9 @@ test('get source', t => {
 })
 
 /**
- * Cannot set source.
+ * Source protected.
  */
-test('cannot set source', t => {
+test('source protected', t => {
   const source = new Address(testAddress)
   const taint = new Taint(source)
   t.throws(() => {

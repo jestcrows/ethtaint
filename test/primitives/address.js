@@ -26,9 +26,9 @@ test('get hex', t => {
 })
 
 /**
- * Cannot set hex representation.
+ * Hex representation protected.
  */
-test('cannot set hex', t => {
+test('hex protected', t => {
   const address = new Address(testAddress)
   t.throws(() => {
     address.hex = 'test'
