@@ -195,3 +195,45 @@ test('access address', t => {
   const values = [...addresses]
   t.true(values[1] === address2)
 })
+
+/**
+ * Has source address.
+ */
+test('has source address', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  t.true(taintItem.hasAddress(source))
+})
+
+/**
+ * No address when recipients empty.
+ */
+test('no address', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const address2 = new Address(testAddress2)
+  t.false(taintItem.hasAddress(address2))
+})
+
+/**
+ * Unrelated address not possessed.
+ */
+test('unrelated address not possessed', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const address2 = new Address(testAddress2)
+  taintItem.addRecipient(address2)
+  const address3 = new Address(testAddress3)
+  t.false(taintItem.hasAddress(address3))
+})
+
+/**
+ * Has added address.
+ */
+test('has added address', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const address2 = new Address(testAddress2)
+  taintItem.addRecipient(address2)
+  t.true(taintItem.hasAddress(address2))
+})
