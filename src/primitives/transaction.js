@@ -26,6 +26,16 @@ class Transaction {
     privs.set(this, priv)
     priv.block = block
   }
+
+  /**
+   * Containing block.
+   * @type {Block}
+   */
+  get block () {
+    const priv = privs.get(this)
+    const block = priv.block
+    return block
+  }
 }
 
 // Expose

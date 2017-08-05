@@ -26,3 +26,23 @@ test('create', t => {
     new Transaction(block)
   })
 })
+
+/**
+ * Get block.
+ */
+test('get block', t => {
+  const block = new Block(testBlockNumber)
+  const tx = new Transaction(block)
+  t.true(tx.block === block)
+})
+
+/**
+ * Block protected.
+ */
+test('block protected', t => {
+  const block = new Block(testBlockNumber)
+  const tx = new Transaction(block)
+  t.throws(() => {
+    tx.block = 'test'
+  })
+})
