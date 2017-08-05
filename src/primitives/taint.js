@@ -6,7 +6,7 @@
 'use strict'
 
 // Imports
-const Address = require('./address')
+const arg = require('../util/arg')
 
 /**
  * Private members store.
@@ -23,9 +23,7 @@ class Taint {
    */
   constructor (source) {
     // Validate arguments
-    if (!(source instanceof Address)) {
-      throw new Error('Argument source must be an Address')
-    }
+    arg.Address(source)
 
     const priv = {}
     privs.set(this, priv)
