@@ -2,6 +2,9 @@
   "name": "ethtaint",
   "version": "0.1.0",
   "license": "Unlicense",
+  "scripts": {
+    "test": "ava"
+  },
   "devDependencies": {
     "ava": "^0.21.0",
     "snazzy": "^7.0.0",
