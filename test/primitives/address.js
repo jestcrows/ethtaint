@@ -7,6 +7,7 @@ import Taint from '../../src/primitives/taint'
 
 // Test data
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
+const testAddress2 = '0xe2652A4d678208BbC7f72f92Fb87Ce885BBfBf2f'
 
 /**
  * Create a new address.
@@ -94,4 +95,36 @@ test('access taint', t => {
   const taint = address.taint
   const values = [...taint]
   t.true(values[0] === taintItem)
+})
+
+/**
+ * No taint possessed when empty.
+ */
+test('no taint', t => {
+  const address = new Address(testAddress)
+  const address2 = new Address(testAddress2)
+  const taintItem = new Taint(address2)
+  t.false(address.hasTaint(taintItem))
+})
+
+/**
+ * Unrelated taint not possessed.
+ */
+test('free of unrelated taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  address.addTaint(taintItem)
+  const address2 = new Address(testAddress2)
+  const taintItem2 = new Taint(address2)
+  t.false(address.hasTaint(taintItem2))
+})
+
+/**
+ * Has added taint.
+ */
+test('has added taint', t => {
+  const address = new Address(testAddress)
+  const taintItem = new Taint(address)
+  address.addTaint(taintItem)
+  t.true(address.hasTaint(taintItem))
 })

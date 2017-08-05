@@ -66,6 +66,24 @@ class Address {
     taint.add(taintItem)
     return this
   }
+
+  /**
+   * Check whether has taint item.
+   * @param taintItem {Taint} - Taint item.
+   * @return {boolean} - Whether has taint item.
+   */
+  hasTaint (taintItem) {
+    // Validate arguments
+    arg.Taint(taintItem)
+
+    const priv = privs.get(this)
+    const taint = priv.taint
+    if (taint === null) {
+      return false
+    } else {
+      return taint.has(taintItem)
+    }
+  }
 }
 
 // Expose
