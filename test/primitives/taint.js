@@ -48,3 +48,24 @@ test('source protected', t => {
     taint.source = {}
   })
 })
+
+/**
+ * Get empty recipients.
+ */
+test('get empty recipients', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const recipients = taintItem.recipients
+  t.true(Array.isArray(recipients) && recipients.length === 0)
+})
+
+/**
+ * Recipients protected.
+ */
+test('recipients protected', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  t.throws(() => {
+    taintItem.recipients = 'test'
+  })
+})

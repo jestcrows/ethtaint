@@ -25,6 +25,7 @@ class Taint {
     const priv = {}
     privs.set(this, priv)
     priv.source = source
+    priv.recipients = null
   }
 
   /**
@@ -35,6 +36,20 @@ class Taint {
     const priv = privs.get(this)
     const source = priv.source
     return source
+  }
+
+  /**
+   * Recipients of taint. Excludes source.
+   * @type {Address[]}
+   */
+  get recipients () {
+    const priv = privs.get(this)
+    const recipients = priv.recipients
+    if (recipients === null) {
+      return []
+    } else {
+      return [...recipients]
+    }
   }
 }
 
