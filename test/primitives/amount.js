@@ -5,6 +5,10 @@ import test from 'ava'
 import Amount from '../../src/primitives/amount'
 import BigNumber from 'bignumber.js'
 
+// Test data
+const testNumber = 78953286724
+const testValue = '78953286724'
+
 /**
  * Value must be BigNumber.
  */
@@ -23,4 +27,13 @@ test('create', t => {
   t.notThrows(() => {
     new Amount(value)
   })
+})
+
+/**
+ * Access value in wei.
+ */
+test('access wei', t => {
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  t.true(amount.wei.equals(value))
 })

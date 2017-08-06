@@ -5,6 +5,9 @@
 
 'use strict'
 
+// Imports
+const BigNumber = require('bignumber.js')
+
 /**
  * Private members store.
  * @private
@@ -25,6 +28,17 @@ class Amount {
     const priv = {}
     privs.set(this, priv)
     priv.value = value
+  }
+
+  /**
+   * Value in wei.
+   * @type {BigNumber}
+   */
+  get wei () {
+    const priv = privs.get(this)
+    const value = priv.value
+    const wei = new BigNumber(value)
+    return wei
   }
 }
 
