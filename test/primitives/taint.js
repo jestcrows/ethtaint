@@ -376,3 +376,84 @@ test('access transaction', t => {
   const values = [...txs]
   t.true(values[0] === tx)
 })
+
+/**
+ * No transaction when empty.
+ */
+test('no transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  t.false(taintItem.hasTransaction(tx))
+})
+
+/**
+ * Unrelated transaction not contained.
+ */
+test('unrelated transaction not contained', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  taintItem.addTransaction(tx)
+  const block2 = new Block(testBlockNumber2)
+  const hash2 = testTransactionHash2
+  const from2 = new Address(testAddress3)
+  const to2 = new Address(testAddress4)
+  const value2 = new BigNumber(testValue2)
+  const amount2 = new Amount(value2)
+  const tx2 = new Transaction(
+    block2,
+    hash2,
+    from2,
+    to2,
+    amount2
+  )
+  t.false(taintItem.hasTransaction(tx2))
+})
+
+/**
+ * Has added transaction
+ */
+test('has added transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  taintItem.addTransaction(tx)
+  t.true(taintItem.hasTransaction(tx))
+})
