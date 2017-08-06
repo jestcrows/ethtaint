@@ -19,6 +19,9 @@ class Block {
    * @param {number} number - Block number.
    */
   constructor (number) {
+    // Validate arguments
+    arg.integer(number)
+
     const priv = {}
     privs.set(this, priv)
     priv.number = number
@@ -37,3 +40,6 @@ class Block {
 
 // Expose
 module.exports = Block
+
+// Circular imports
+const arg = require('../util/arg')
