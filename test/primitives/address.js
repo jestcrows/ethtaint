@@ -10,6 +10,15 @@ const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testAddress2 = '0xe2652A4d678208BbC7f72f92Fb87Ce885BBfBf2f'
 
 /**
+ * Hex must be addressHex.
+ */
+test('hex must be address hex', t => {
+  t.throws(() => {
+    new Address('test')
+  })
+})
+
+/**
  * Create a new address.
  */
 test('create', t => {

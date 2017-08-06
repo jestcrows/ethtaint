@@ -19,6 +19,9 @@ class Address {
    * @param {string} hex - Hexadecimal representation of address.
    */
   constructor (hex) {
+    // Validate arguments
+    arg.addressHex(hex)
+
     const priv = {}
     privs.set(this, priv)
     priv.hex = hex
