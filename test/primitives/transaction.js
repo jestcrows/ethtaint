@@ -531,3 +531,68 @@ test('has added taint', t => {
   tx.addTaint(taint)
   t.true(tx.hasTaint(taint))
 })
+
+/**
+ * Not tainted when empty.
+ */
+test('not tainted', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.false(tx.tainted)
+})
+
+/**
+ * Tainted after added.
+ */
+test('tainted', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress3)
+  const taint = new Taint(source)
+  tx.addTaint(taint)
+  t.true(tx.tainted)
+})
+
+/**
+ * Tainted protected.
+ */
+test('tainted protected', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.throws(() => {
+    tx.tainted = 'test'
+  })
+})
