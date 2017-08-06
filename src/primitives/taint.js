@@ -5,7 +5,10 @@
 
 'use strict'
 
-/** Private members store. */
+/**
+ * Private members store.
+ * @private
+ */
 const privs = new WeakMap()
 
 /**
