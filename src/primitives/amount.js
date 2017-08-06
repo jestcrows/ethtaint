@@ -16,13 +16,20 @@ const privs = new WeakMap()
  */
 class Amount {
   /**
-   * No parameters.
+   * @param {BigNumber} value - Value in wei.
    */
-  constructor () {
+  constructor (value) {
+    // Validate arguments
+    arg.BigNumber(value)
+
     const priv = {}
     privs.set(this, priv)
+    priv.value = value
   }
 }
 
 // Expose
 module.exports = Amount
+
+// Circular imports
+const arg = require('../util/arg')
