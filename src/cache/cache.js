@@ -47,6 +47,17 @@ class Cache {
     const map = priv.map
     return map.get(key)
   }
+
+  /**
+   * Delete element with key.
+   * @param {*} key - Element key.
+   * @return {undefined}
+   */
+  async delete (key) {
+    const priv = privs.get(this)
+    const map = priv.map
+    map.delete(key)
+  }
 }
 
 // Expose

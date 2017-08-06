@@ -48,3 +48,24 @@ test('get set item', async t => {
   const value = await cache.get(testKey)
   t.true(value === testValue)
 })
+
+/**
+ * Delete unset item.
+ */
+test('delete unset item', async t => {
+  const cache = new Cache()
+  await t.notThrows(async () => {
+    await cache.delete(testKey)
+  })
+})
+
+/**
+ * Delete set item.
+ */
+test('delete set item', async t => {
+  const cache = new Cache()
+  await cache.set(testKey, testValue)
+  await cache.delete(testKey)
+  const value = await cache.get(testKey)
+  t.true(value === undefined)
+})
