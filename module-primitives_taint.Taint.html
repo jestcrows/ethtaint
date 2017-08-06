@@ -245,7 +245,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line61">line 61</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line62">line 62</a>
     </li></ul></dd>
     
 
@@ -317,7 +317,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line47">line 47</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line48">line 48</a>
     </li></ul></dd>
     
 
@@ -389,7 +389,151 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line37">line 37</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="transactions"><span class="type-signature"></span>transactions<span class="type-signature"> :Set.&lt;<a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a>></span></h4>
+
+
+
+
+<div class="description">
+    Propagating transactions.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line77">line 77</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="txs"><span class="type-signature"></span>txs<span class="type-signature"> :Set.&lt;<a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a>></span></h4>
+
+
+
+
+<div class="description">
+    Propagating transactions.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -518,7 +662,164 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line79">line 79</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line102">line 102</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    This instance for chaining.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="module-primitives_taint.Taint.html">module:primitives/taint.Taint</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addTransaction"><span class="type-signature"></span>addTransaction<span class="signature">(tx)</span><span class="type-signature"> &rarr; {<a href="module-primitives_taint.Taint.html">module:primitives/taint.Taint</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Add propagating transaction.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Propagating transaction.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -675,7 +976,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line117">line 117</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line140">line 140</a>
     </li></ul></dd>
     
 
@@ -832,7 +1133,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line98">line 98</a>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line121">line 121</a>
     </li></ul></dd>
     
 
@@ -883,6 +1184,163 @@
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="hasTransaction"><span class="type-signature"></span>hasTransaction<span class="signature">(tx)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Check whether transaction propagated.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="module-primitives_transaction.Transaction.html">module:primitives/transaction.Transaction</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Queried transaction.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="primitives_taint.js.html">primitives/taint.js</a>, <a href="primitives_taint.js.html#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Whether transaction propagated.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
     
 
     
@@ -898,13 +1356,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-ethtaint.html">ethtaint</a></li><li><a href="module-primitives_address.html">primitives/address</a></li><li><a href="module-primitives_amount.html">primitives/amount</a></li><li><a href="module-primitives_block.html">primitives/block</a></li><li><a href="module-primitives_taint.html">primitives/taint</a></li><li><a href="module-primitives_transaction.html">primitives/transaction</a></li><li><a href="module-util_arg.html">util/arg</a></li></ul><h3>Classes</h3><ul><li><a href="module-primitives_address.Address.html">Address</a></li><li><a href="module-primitives_amount.Amount.html">Amount</a></li><li><a href="module-primitives_block.Block.html">Block</a></li><li><a href="module-primitives_taint.Taint.html">Taint</a></li><li><a href="module-primitives_transaction.Transaction.html">Transaction</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cache_cache.html">cache/cache</a></li><li><a href="module-ethtaint.html">ethtaint</a></li><li><a href="module-primitives_address.html">primitives/address</a></li><li><a href="module-primitives_amount.html">primitives/amount</a></li><li><a href="module-primitives_block.html">primitives/block</a></li><li><a href="module-primitives_taint.html">primitives/taint</a></li><li><a href="module-primitives_transaction.html">primitives/transaction</a></li><li><a href="module-util_arg.html">util/arg</a></li></ul><h3>Classes</h3><ul><li><a href="module-cache_cache.Cache.html">Cache</a></li><li><a href="module-primitives_address.Address.html">Address</a></li><li><a href="module-primitives_amount.Amount.html">Amount</a></li><li><a href="module-primitives_block.Block.html">Block</a></li><li><a href="module-primitives_taint.Taint.html">Taint</a></li><li><a href="module-primitives_transaction.Transaction.html">Transaction</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Sun Aug 06 2017 01:31:27 GMT-0600 (Mountain Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Sun Aug 06 2017 05:13:59 GMT-0600 (Mountain Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
