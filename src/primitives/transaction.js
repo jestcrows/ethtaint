@@ -48,6 +48,7 @@ class Transaction {
     priv.from = from
     priv.to = to
     priv.amount = amount
+    priv.taints = null
   }
 
   /**
@@ -98,6 +99,20 @@ class Transaction {
     const priv = privs.get(this)
     const amount = priv.amount
     return amount
+  }
+
+  /**
+   * Propagated taints.
+   * @type {Set<module:primitives/taint.Taint>}
+   */
+  get taints () {
+    const priv = privs.get(this)
+    const taints = priv.taints
+    if (taints === null) {
+      return new Set()
+    } else {
+      return new Set(taints)
+    }
   }
 }
 

@@ -321,3 +321,46 @@ test('amount protected', t => {
     tx.amount = 'test'
   })
 })
+
+/**
+ * Get empty taints.
+ */
+test('get empty taints', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const taints = tx.taints
+  t.true(taints instanceof Set && taints.size === 0)
+})
+
+/**
+ * Taints protected.
+ */
+test('taints protected', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.throws(() => {
+    tx.taints = 'test'
+  })
+})
