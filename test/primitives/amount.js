@@ -6,8 +6,9 @@ import Amount from '../../src/primitives/amount'
 import BigNumber from 'bignumber.js'
 
 // Test data
-const testNumber = 78953286724
-const testValue = '78953286724'
+const testNumber = 78953232838845586724
+const testValue = '78953232838845586724'
+const testValueEther = '78.95323284'
 
 /**
  * Value must be BigNumber.
@@ -35,4 +36,14 @@ test('access wei', t => {
   const value = new BigNumber(testValue)
   const amount = new Amount(value)
   t.true(amount.wei.equals(value))
+})
+
+/**
+ * Access value in ether.
+ */
+test('access ether', t => {
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const ether = amount.ether
+  t.true(ether.toFixed() === testValueEther)
 })

@@ -16,7 +16,19 @@ const Value = {
   Wei: BigNumber.another({
     DECIMAL_PLACES: 0,
     ROUNDING_MODE: BigNumber.ROUND_HALF_UP
+  }),
+  Ether: BigNumber.another({
+    DECIMAL_PLACES: 8,
+    ROUNDING_MODE: BigNumber.ROUND_HALF_UP
   })
+}
+
+/**
+ * Unit scaling factors.
+ * @private
+ */
+const scalingFactor = {
+  ether: '1000000000000000000'
 }
 
 /**
@@ -50,6 +62,18 @@ class Amount {
     const value = priv.value
     const wei = new Value.Wei(value)
     return wei
+  }
+
+  /**
+   * Value in ether.
+   * @type {BigNumber}
+   */
+  get ether () {
+    const priv = privs.get(this)
+    const value = priv.value
+    const ether = new Value.Ether(value)
+      .dividedBy(scalingFactor.ether)
+    return ether
   }
 }
 
