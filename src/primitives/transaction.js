@@ -23,7 +23,8 @@ class Transaction {
    *     Source address.
    * @param {module:primitives/address.Address} to
    *     Target address.
-   * @param {Amount} amount - Amount transferred.
+   * @param {module:primitives/amount.Amount} amount
+   *     Amount transferred.
    */
   constructor (
     block,
@@ -90,7 +91,7 @@ class Transaction {
 
   /**
    * Amount transferred.
-   * @type {Amount}
+   * @type {module:primitives/amount.Amount}
    */
   get amount () {
     const priv = privs.get(this)

@@ -109,7 +109,7 @@ exports.Address = function Address (arg) {
 
 /**
  * Confirm argument is Amount.
- * @param {Amount|*} arg - Argument.
+ * @param {module:primitives/amount.Amount|*} arg - Argument.
  * @return {undefined}
  * @throws {Error} - If arg is not an Amount.
  */
