@@ -9,6 +9,17 @@
 const BigNumber = require('bignumber.js')
 
 /**
+ * Value class constructors.
+ * @private
+ */
+const Value = {
+  Wei: BigNumber.another({
+    DECIMAL_PLACES: 0,
+    ROUNDING_MODE: BigNumber.ROUND_HALF_UP
+  })
+}
+
+/**
  * Private members store.
  * @private
  */
@@ -37,7 +48,7 @@ class Amount {
   get wei () {
     const priv = privs.get(this)
     const value = priv.value
-    const wei = new BigNumber(value)
+    const wei = new Value.Wei(value)
     return wei
   }
 }
