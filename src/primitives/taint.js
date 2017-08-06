@@ -85,6 +85,14 @@ class Taint {
   }
 
   /**
+   * Propagating transactions.
+   * @type {Set<module:primitives/transaction.Transaction>}
+   */
+  get txs () {
+    return this.transactions
+  }
+
+  /**
    * Add recipient.
    * @param {module:primitives/address.Address} recipient
    *     Recipient of taint.

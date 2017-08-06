@@ -249,6 +249,16 @@ test('get empty transactions', t => {
 })
 
 /**
+ * Get empty transactions through #txs.
+ */
+test('get empty transactions through #txs', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const txs = taintItem.txs
+  t.true(txs instanceof Set && txs.size === 0)
+})
+
+/**
  * Transactions protected.
  */
 test('transactions protected', t => {
