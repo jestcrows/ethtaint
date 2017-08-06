@@ -74,6 +74,16 @@ class Transaction {
     const from = priv.from
     return from
   }
+
+  /**
+   * Target address.
+   * @type {Address}
+   */
+  get to () {
+    const priv = privs.get(this)
+    const to = priv.to
+    return to
+  }
 }
 
 // Expose
