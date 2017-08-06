@@ -16,7 +16,7 @@ const privs = new WeakMap()
  */
 class Transaction {
   /**
-   * @param block {Block} - Containing block.
+   * @param {Block} block - Containing block.
    */
   constructor (block) {
     // Validate arguments
