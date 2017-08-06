@@ -75,6 +75,14 @@ class Amount {
       .dividedBy(scalingFactor.ether)
     return ether
   }
+
+  /**
+   * Value in ether.
+   * @type {BigNumber}
+   */
+  get eth () {
+    return this.ether
+  }
 }
 
 // Expose

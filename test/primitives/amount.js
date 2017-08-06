@@ -47,3 +47,13 @@ test('access ether', t => {
   const ether = amount.ether
   t.true(ether.toFixed() === testValueEther)
 })
+
+/**
+ * Access value in ether through #eth.
+ */
+test('access ether through #eth', t => {
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const eth = amount.eth
+  t.true(eth.toFixed() === testValueEther)
+})
