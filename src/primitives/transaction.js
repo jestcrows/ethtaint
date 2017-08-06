@@ -17,7 +17,8 @@ const privs = new WeakMap()
  */
 class Transaction {
   /**
-   * @param {Block} block - Containing block.
+   * @param {module:primitives/block.Block} block
+   *     Containing block.
    * @param {string} hash - Transaction hash.
    * @param {module:primitives/address.Address} from
    *     Source address.
@@ -51,7 +52,7 @@ class Transaction {
 
   /**
    * Containing block.
-   * @type {Block}
+   * @type {module:primitives/block.Block}
    */
   get block () {
     const priv = privs.get(this)

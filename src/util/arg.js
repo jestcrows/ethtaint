@@ -121,7 +121,7 @@ exports.Amount = function Amount (arg) {
 
 /**
  * Confirm argument is Block.
- * @param {Block|*} arg - Argument.
+ * @param {module:primitives/block.Block|*} arg - Argument.
  * @return {undefined}
  * @throws {Error} - If arg is not a Block.
  */
