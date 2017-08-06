@@ -47,21 +47,21 @@ test('hex protected', t => {
 })
 
 /**
- * Get empty taint.
+ * Get empty taints.
  */
 test('get empty taint', t => {
   const address = new Address(testAddress)
-  const taint = address.taint
-  t.true(taint instanceof Set && taint.size === 0)
+  const taints = address.taints
+  t.true(taints instanceof Set && taints.size === 0)
 })
 
 /**
- * Taint protected.
+ * Taints protected.
  */
 test('taint protected', t => {
   const address = new Address(testAddress)
   t.throws(() => {
-    address.taint = 'test'
+    address.taints = 'test'
   })
 })
 
@@ -92,7 +92,7 @@ test('count taint', t => {
   const address = new Address(testAddress)
   const taintItem = new Taint(address)
   address.addTaint(taintItem)
-  t.true(address.taint.size === 1)
+  t.true(address.taints.size === 1)
 })
 
 /**
@@ -102,8 +102,8 @@ test('access taint', t => {
   const address = new Address(testAddress)
   const taintItem = new Taint(address)
   address.addTaint(taintItem)
-  const taint = address.taint
-  const values = [...taint]
+  const taints = address.taints
+  const values = [...taints]
   t.true(values[0] === taintItem)
 })
 

@@ -43,7 +43,7 @@ class Address {
    * All collected taint.
    * @type {Set<module:primitives/taint.Taint>}
    */
-  get taint () {
+  get taints () {
     const priv = privs.get(this)
     const taint = priv.taint
     if (taint === null) {
