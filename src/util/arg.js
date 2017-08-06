@@ -13,6 +13,18 @@ const type = {
 }
 
 /**
+ * Confirm argument is string literal.
+ * @param {string|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not a string literal.
+ */
+exports.string = function string (arg) {
+  if (!(typeof arg === 'string')) {
+    throw new Error('Argument must be string literal')
+  }
+}
+
+/**
  * Confirm argument is Address.
  * @param {Address|*} arg - Argument.
  * @return {undefined}

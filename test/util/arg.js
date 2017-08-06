@@ -12,6 +12,26 @@ const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testBlockNumber = 56
 
 /**
+ * Succeed string.
+ */
+test('succeed string', t => {
+  const string = 'test'
+  t.notThrows(() => {
+    arg.string(string)
+  })
+})
+
+/**
+ * Fail string.
+ */
+test('fail string', t => {
+  const number = 1
+  t.throws(() => {
+    arg.string(number)
+  })
+})
+
+/**
  * Succeed Address.
  */
 test('succeed Address', t => {
