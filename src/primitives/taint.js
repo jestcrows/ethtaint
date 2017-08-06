@@ -17,9 +17,8 @@ const privs = new WeakMap()
  */
 class Taint {
   /**
-   * @param {Address} source - Source of taint.
    * @param {module:primitives/address.Address} source
-   *   - Source of taint.
+   *     Source of taint.
    */
   constructor (source) {
     // Validate arguments
@@ -33,7 +32,7 @@ class Taint {
 
   /**
    * Source of taint.
-   * @type {Address}
+   * @type {module:primitives/address.Address}
    */
   get source () {
     const priv = privs.get(this)
@@ -43,7 +42,7 @@ class Taint {
 
   /**
    * Recipients of taint. Excludes source.
-   * @type {Set<Address>}
+   * @type {Set<module:primitives/address.Address>}
    */
   get recipients () {
     const priv = privs.get(this)
@@ -57,7 +56,7 @@ class Taint {
 
   /**
    * Tainted addresses. Includes source.
-   * @type {Set<Address>}
+   * @type {Set<module:primitives/address.Address>}
    */
   get addresses () {
     const priv = privs.get(this)
@@ -90,7 +89,8 @@ class Taint {
 
   /**
    * Check whether has recipient.
-   * @param address {Address} - Queried address.
+   * @param {module:primitives/address.Address} address
+   *     Queried address.
    * @return {boolean} - Whether has address as recipient.
    */
   hasRecipient (address) {
@@ -108,7 +108,8 @@ class Taint {
 
   /**
    * Check whether has address.
-   * @param address {Address} - Queried address.
+   * @param {module:primitives/address.Address} address
+   *     Queried address.
    * @return {boolean} - Whether has address.
    */
   hasAddress (address) {

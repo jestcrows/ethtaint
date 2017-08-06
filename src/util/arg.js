@@ -97,7 +97,7 @@ exports.BigNumber = function BigNumber (arg) {
 
 /**
  * Confirm argument is Address.
- * @param {Address|*} arg - Argument.
+ * @param {module:primitives/address.Address|*} arg - Argument.
  * @return {undefined}
  * @throws {Error} - If arg is not an Address.
  */

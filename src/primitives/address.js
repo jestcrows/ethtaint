@@ -56,7 +56,8 @@ class Address {
   /**
    * Add taint item.
    * @param {Taint} taintItem - Taint item.
-   * @return {Address} - This instance for chaining.
+   * @return {module:primitives/address.Address}
+   *     This instance for chaining.
    */
   addTaint (taintItem) {
     // Validate arguments

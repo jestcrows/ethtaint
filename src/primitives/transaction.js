@@ -19,8 +19,10 @@ class Transaction {
   /**
    * @param {Block} block - Containing block.
    * @param {string} hash - Transaction hash.
-   * @param {Address} from - Source address.
-   * @param {Address} to - Target address.
+   * @param {module:primitives/address.Address} from
+   *     Source address.
+   * @param {module:primitives/address.Address} to
+   *     Target address.
    * @param {Amount} amount - Amount transferred.
    */
   constructor (
@@ -68,7 +70,7 @@ class Transaction {
 
   /**
    * Source address.
-   * @type {Address}
+   * @type {module:primitives/address.Address}
    */
   get from () {
     const priv = privs.get(this)
@@ -78,7 +80,7 @@ class Transaction {
 
   /**
    * Target address.
-   * @type {Address}
+   * @type {module:primitives/address.Address}
    */
   get to () {
     const priv = privs.get(this)
