@@ -10,6 +10,8 @@ import Taint from '../../src/primitives/taint'
 // Test data
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testBlockNumber = 56
+const testTransactionHash
+  = '0x17eb022fd747ad89211c5384af50b87816332f4cc708dae6319040816b3d67e5'
 
 /**
  * Succeed string.
@@ -150,6 +152,25 @@ test('succeed addressHex', t => {
 test('fail addressHex', t => {
   t.throws(() => {
     arg.addressHex('test')
+  })
+})
+
+/**
+ * Succeed transactionHash.
+ */
+test('succeed transactionHash', t => {
+  t.notThrows(() => {
+    arg.transactionHash(testTransactionHash)
+  })
+})
+
+/**
+ * Fail transactionHash.
+ */
+test('fail transactionHash', t => {
+  const number = 8
+  t.throws(() => {
+    arg.transactionHash(number)
   })
 })
 
