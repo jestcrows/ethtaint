@@ -72,7 +72,7 @@ class Address {
 
   /**
    * Check whether has taint item.
-   * @param taintItem {Taint} - Taint item.
+   * @param {Taint} taintItem - Taint item.
    * @return {boolean} - Whether has taint item.
    */
   hasTaint (taintItem) {
