@@ -64,6 +64,16 @@ class Transaction {
     const hash = priv.hash
     return hash
   }
+
+  /**
+   * Source address.
+   * @type {Address}
+   */
+  get from () {
+    const priv = privs.get(this)
+    const from = priv.from
+    return from
+  }
 }
 
 // Expose
