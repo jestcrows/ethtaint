@@ -28,6 +28,7 @@ class Taint {
     privs.set(this, priv)
     priv.source = source
     priv.recipients = null
+    priv.transactions = null
   }
 
   /**
@@ -66,6 +67,20 @@ class Taint {
       return new Set([source])
     } else {
       return new Set([source, ...recipients])
+    }
+  }
+
+  /**
+   * Propagating transactions.
+   * @type {Set<module:primitives/transaction.Transaction>}
+   */
+  get transactions () {
+    const priv = privs.get(this)
+    const transactions = priv.transactions
+    if (transactions === null) {
+      return new Set()
+    } else {
+      return new Set(transactions)
     }
   }
 

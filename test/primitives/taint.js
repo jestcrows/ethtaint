@@ -237,3 +237,24 @@ test('has added address', t => {
   taintItem.addRecipient(address2)
   t.true(taintItem.hasAddress(address2))
 })
+
+/**
+ * Get empty transactions.
+ */
+test('get empty transactions', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  const transactions = taintItem.transactions
+  t.true(transactions instanceof Set && transactions.size === 0)
+})
+
+/**
+ * Transactions protected.
+ */
+test('transactions protected', t => {
+  const source = new Address(testAddress)
+  const taintItem = new Taint(source)
+  t.throws(() => {
+    taintItem.transactions = 'test'
+  })
+})
