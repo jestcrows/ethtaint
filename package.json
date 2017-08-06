@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "license": "Unlicense",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r"
   },
   "devDependencies": {
     "ava": "^0.21.0",
