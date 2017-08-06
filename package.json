@@ -6,6 +6,10 @@
     "test": "ava",
     "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r"
   },
+  "dependencies": {
+    "bignumber.js": "^4.0.2",
+    "ethereum-address": "0.0.4"
+  },
   "devDependencies": {
     "ava": "^0.21.0",
     "jsdoc": "^3.5.4",
@@ -17,9 +21,5 @@
     "ignore": [
       "test"
     ]
-  },
-  "dependencies": {
-    "bignumber.js": "^4.0.2",
-    "ethereum-address": "0.0.4"
   }
 }
