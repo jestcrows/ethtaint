@@ -16,6 +16,7 @@ const privs = new WeakMap()
 
 /**
  * Chain agent interfacing with Etherscan.
+ * @static
  */
 class ChainAgent {
   /**
