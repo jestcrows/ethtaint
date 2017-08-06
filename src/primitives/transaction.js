@@ -134,6 +134,25 @@ class Transaction {
     taints.add(taint)
     return this
   }
+
+  /**
+   * Check whether propagated taint item.
+   * @param {module:primitives/taint.Taint} taint
+   *     Taint item.
+   * @return {boolean} Whether propagated taint item.
+   */
+  hasTaint (taint) {
+    // Validate arguments
+    arg.Taint(taint)
+
+    const priv = privs.get(this)
+    const taints = priv.taints
+    if (taints === null) {
+      return false
+    } else {
+      return taints.has(taint)
+    }
+  }
 }
 
 // Expose

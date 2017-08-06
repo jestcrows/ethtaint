@@ -461,3 +461,73 @@ test('access taint', t => {
   const values = [...taints]
   t.true(values[0] === taint)
 })
+
+/**
+ * No taint when empty.
+ */
+test('no taint', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress3)
+  const taint = new Taint(source)
+  t.false(tx.hasTaint(taint))
+})
+
+/**
+ * Unrelated taint not propagated.
+ */
+test('free of unrelated taint', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress3)
+  const taint = new Taint(source)
+  tx.addTaint(taint)
+  const source2 = new Address(testAddress4)
+  const taint2 = new Taint(source2)
+  t.false(tx.hasTaint(taint2))
+})
+
+/**
+ * Has added taint.
+ */
+test('has added taint', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress3)
+  const taint = new Taint(source)
+  tx.addTaint(taint)
+  t.true(tx.hasTaint(taint))
+})
