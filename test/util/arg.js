@@ -6,6 +6,7 @@ import arg from '../../src/util/arg'
 import Address from '../../src/primitives/address'
 import Block from '../../src/primitives/block'
 import Taint from '../../src/primitives/taint'
+import BigNumber from 'bignumber.js'
 
 // Test data
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
@@ -171,6 +172,26 @@ test('fail transactionHash', t => {
   const number = 8
   t.throws(() => {
     arg.transactionHash(number)
+  })
+})
+
+/**
+ * Succeed BigNumber.
+ */
+test('succeed BigNumber', t => {
+  const bn = new BigNumber('8')
+  t.notThrows(() => {
+    arg.BigNumber(bn)
+  })
+})
+
+/**
+ * Fail BigNumber.
+ */
+test('fail BigNumber', t => {
+  const number = 8
+  t.throws(() => {
+    arg.BigNumber(number)
   })
 })
 

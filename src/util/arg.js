@@ -10,6 +10,7 @@ const ethereumAddress = require('ethereum-address')
 
 // Type imports
 const type = {
+  BigNumber: require('bignumber.js'),
   Address: require('../primitives/address'),
   Block: require('../primitives/block'),
   Taint: require('../primitives/taint')
@@ -78,6 +79,18 @@ exports.addressHex = function addressHex (arg) {
  */
 exports.transactionHash = function transactionHash (arg) {
   exports.string(arg)
+}
+
+/**
+ * Confirm argument is BigNumber.
+ * @param {BigNumber|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not a BigNumber.
+ */
+exports.BigNumber = function BigNumber (arg) {
+  if (!(arg instanceof type.BigNumber)) {
+    throw new Error('Argument must be BigNumber')
+  }
 }
 
 /**
