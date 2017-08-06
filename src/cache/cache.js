@@ -58,6 +58,17 @@ class Cache {
     const map = priv.map
     map.delete(key)
   }
+
+  /**
+   * Check whether has element with key.
+   * @param {*} key - Element key.
+   * @return {boolean} Whether has element with key.
+   */
+  async has (key) {
+    const priv = privs.get(this)
+    const map = priv.map
+    return map.has(key)
+  }
 }
 
 // Expose

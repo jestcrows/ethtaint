@@ -69,3 +69,30 @@ test('delete set item', async t => {
   const value = await cache.get(testKey)
   t.true(value === undefined)
 })
+
+/**
+ * Not has unset item.
+ */
+test('not has unset item', async t => {
+  const cache = new Cache()
+  t.false(await cache.has(testKey))
+})
+
+/**
+ * Has set item.
+ */
+test('has set item', async t => {
+  const cache = new Cache()
+  await cache.set(testKey, testValue)
+  t.true(await cache.has(testKey))
+})
+
+/**
+ * Not has deleted item.
+ */
+test('not has deleted item', async t => {
+  const cache = new Cache()
+  await cache.set(testKey, testValue)
+  await cache.delete(testKey)
+  t.false(await cache.has(testKey))
+})
