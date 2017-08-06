@@ -51,6 +51,14 @@ class Block {
       return new Set(transactions)
     }
   }
+
+  /**
+   * Contained taint-propagating transactions.
+   * @type {Set<Transaction>}
+   */
+  get txs () {
+    return this.transactions
+  }
 }
 
 // Expose

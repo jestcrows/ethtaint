@@ -62,6 +62,15 @@ test('get empty transactions', t => {
 })
 
 /**
+ * Get empty transctions through #txs.
+ */
+test('get empty transactions through #txs', t => {
+  const block = new Block(testBlockNumber)
+  const txs = block.txs
+  t.true(txs instanceof Set && txs.size === 0)
+})
+
+/**
  * Transactions protected.
  */
 test('transactions protected', t => {
