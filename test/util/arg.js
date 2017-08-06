@@ -2,7 +2,7 @@
 import test from 'ava'
 
 // Imports
-const arg = require('../../src/util/arg')
+import arg from '../../src/util/arg'
 
 // Placeholder
 test.todo('arg')
