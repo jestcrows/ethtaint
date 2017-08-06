@@ -153,6 +153,26 @@ class Taint {
       return recipients.has(address)
     }
   }
+
+  /**
+   * Add propagating transaction.
+   * @param {module:primitives/transaction.Transaction} tx
+   *     Propagating transaction.
+   * @return {module:primitives/taint.Taint}
+   *     This instance for chaining.
+   */
+  addTransaction (tx) {
+    // Validate arguments
+    arg.Transaction(tx)
+
+    const priv = privs.get(this)
+    if(priv.transactions === null) {
+      priv.transactions = new Set()
+    }
+    const transactions = priv.transactions
+    transactions.add(tx)
+    return this
+  }
 }
 
 // Expose

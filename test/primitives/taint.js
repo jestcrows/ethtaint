@@ -4,11 +4,25 @@ import test from 'ava'
 // Imports
 import Address from '../../src/primitives/address'
 import Taint from '../../src/primitives/taint'
+import Block from '../../src/primitives/block'
+import Transaction from '../../src/primitives/transaction'
+import Amount from '../../src/primitives/amount'
+import BigNumber from 'bignumber.js'
 
 // Test data
+const testBlockNumber = 56
+const testBlockNumber2 = 832
+const testTransactionHash
+  = '0x17eb022fd747ad89211c5384af50b87816332f4cc708dae6319040816b3d67e5'
+const testTransactionHash2
+  = '0x160c82c7a7b248fb1b8a2be0284916944a441d91bd3830f710c007ba0ad78070'
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testAddress2 = '0xe2652A4d678208BbC7f72f92Fb87Ce885BBfBf2f'
 const testAddress3 = '0x5E32E35cbE13D8997C12Df99424eF8b1D7BEdC06'
+const testAddress4 = '0xC82bE38B3c78453f7D16Db8b110886E25B5fCEf8'
+const testAddress5 = '0x0589146f7273E5B23fE54a762a3f1B008CAf313B'
+const testValue = '78953232838845586724'
+const testValue2 = '52387028750987509378'
 
 /**
  * Cannot create without Address source.
@@ -267,4 +281,98 @@ test('transactions protected', t => {
   t.throws(() => {
     taintItem.transactions = 'test'
   })
+})
+
+/**
+ * Add transaction.
+ */
+test('add transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  t.notThrows(() => {
+    taintItem.addTransaction(tx)
+  })
+})
+
+/**
+ * Chain after adding transaction.
+ */
+test('chain add transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  t.true(taintItem.addTransaction(tx) === taintItem)
+})
+
+/**
+ * Count of transactions.
+ */
+test('count transactions', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  taintItem.addTransaction(tx)
+  t.true(taintItem.transactions.size === 1)
+})
+
+/**
+ * Access added transaction.
+ */
+test('access transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  const source = new Address(testAddress5)
+  const taintItem = new Taint(source)
+  taintItem.addTransaction(tx)
+  const txs = taintItem.transactions
+  const values = [...txs]
+  t.true(values[0] === tx)
 })
