@@ -84,6 +84,16 @@ class Transaction {
     const to = priv.to
     return to
   }
+
+  /**
+   * Amount transferred.
+   * @type {Amount}
+   */
+  get amount () {
+    const priv = privs.get(this)
+    const amount = priv.amount
+    return amount
+  }
 }
 
 // Expose

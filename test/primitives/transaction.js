@@ -279,3 +279,45 @@ test('to protected', t => {
     tx.to = 'test'
   })
 })
+
+/**
+ * Get amount.
+ */
+test('get amount', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.true(tx.amount.wei.equals(amount.wei))
+})
+
+/**
+ * Amount protected.
+ */
+test('amount protected', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.throws(() => {
+    tx.amount = 'test'
+  })
+})
