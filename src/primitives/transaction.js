@@ -17,14 +17,32 @@ const privs = new WeakMap()
 class Transaction {
   /**
    * @param {Block} block - Containing block.
+   * @param {string} hash - Transaction hash.
+   * @param {Address} from - Source address.
+   * @param {Address} to - Target address.
+   * @param {Amount} amount - Amount transferred.
    */
-  constructor (block) {
+  constructor (
+    block,
+    hash,
+    from,
+    to,
+    amount
+  ) {
     // Validate arguments
     arg.Block(block)
+    arg.transactionHash(hash)
+    arg.Address(from)
+    arg.Address(to)
+    arg.Amount(amount)
 
     const priv = {}
     privs.set(this, priv)
     priv.block = block
+    priv.hash = hash
+    priv.from = from
+    priv.to = to
+    priv.amount = amount
   }
 
   /**
