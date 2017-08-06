@@ -1,6 +1,6 @@
 /**
- * @file Address type.
- * @package
+ * @file An Ethereum address.
+ * @module primitives/address
  */
 
 'use strict'

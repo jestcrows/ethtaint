@@ -1,6 +1,6 @@
 /**
- * @file Amount of ETH.
- * @package
+ * @file An amount of ether.
+ * @module primitives/amount
  */
 
 'use strict'

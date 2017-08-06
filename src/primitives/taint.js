@@ -1,6 +1,6 @@
 /**
- * @file Taint item.
- * @package
+ * @file A taint item.
+ * @module primitives/taint
  */
 
 'use strict'
@@ -14,6 +14,8 @@ const privs = new WeakMap()
 class Taint {
   /**
    * @param {Address} source - Source of taint.
+   * @param {module:primitives/address.Address} source
+   *   - Source of taint.
    */
   constructor (source) {
     // Validate arguments

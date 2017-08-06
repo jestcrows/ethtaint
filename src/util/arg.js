@@ -1,6 +1,6 @@
 /**
  * @file Argument validation procedures.
- * @package
+ * @module util/arg
  */
 
 'use strict'

@@ -1,6 +1,6 @@
 /**
- * @file A transaction.
- * @package
+ * @file An Ethereum transaction.
+ * @module primitives/transaction
  */
 
 'use strict'
