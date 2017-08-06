@@ -12,6 +12,7 @@ const ethereumAddress = require('ethereum-address')
 const type = {
   BigNumber: require('bignumber.js'),
   Address: require('../primitives/address'),
+  Amount: require('../primitives/amount'),
   Block: require('../primitives/block'),
   Taint: require('../primitives/taint')
 }
@@ -102,6 +103,18 @@ exports.BigNumber = function BigNumber (arg) {
 exports.Address = function Address (arg) {
   if (!(arg instanceof type.Address)) {
     throw new Error('Argument must be Address')
+  }
+}
+
+/**
+ * Confirm argument is Amount.
+ * @param {Amount|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not an Amount.
+ */
+exports.Amount = function Amount (arg) {
+  if (!(arg instanceof type.Amount)) {
+    throw new Error('Argument must be Amount')
   }
 }
 

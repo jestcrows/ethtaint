@@ -4,6 +4,7 @@ import test from 'ava'
 // Imports
 import arg from '../../src/util/arg'
 import Address from '../../src/primitives/address'
+import Amount from '../../src/primitives/amount'
 import Block from '../../src/primitives/block'
 import Taint from '../../src/primitives/taint'
 import BigNumber from 'bignumber.js'
@@ -13,6 +14,8 @@ const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testBlockNumber = 56
 const testTransactionHash
   = '0x17eb022fd747ad89211c5384af50b87816332f4cc708dae6319040816b3d67e5'
+const testNumber = 78953232838845586724
+const testValue = '78953232838845586724'
 
 /**
  * Succeed string.
@@ -211,6 +214,26 @@ test('succeed Address', t => {
 test('fail Address', t => {
   t.throws(() => {
     arg.Address('test')
+  })
+})
+
+/**
+ * Succeed Amount.
+ */
+test('succeed Amount', t => {
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  t.notThrows(() => {
+    arg.Amount(amount)
+  })
+})
+
+/**
+ * Fail Amount.
+ */
+test('fail Amount', t => {
+  t.throws(() => {
+    arg.Amount(testNumber)
   })
 })
 
