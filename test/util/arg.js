@@ -7,10 +7,12 @@ import Address from '../../src/primitives/address'
 import Amount from '../../src/primitives/amount'
 import Block from '../../src/primitives/block'
 import Taint from '../../src/primitives/taint'
+import Transaction from '../../src/primitives/transaction'
 import BigNumber from 'bignumber.js'
 
 // Test data
 const testAddress = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
+const testAddress2 = '0xe2652A4d678208BbC7f72f92Fb87Ce885BBfBf2f'
 const testBlockNumber = 56
 const testTransactionHash
   = '0x17eb022fd747ad89211c5384af50b87816332f4cc708dae6319040816b3d67e5'
@@ -273,5 +275,36 @@ test('succeed Taint', t => {
 test('fail Taint', t => {
   t.throws(() => {
     arg.Taint('test')
+  })
+})
+
+/**
+ * Succeed Transaction.
+ */
+test('succeed Transaction', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.notThrows(() => {
+    arg.Transaction(tx)
+  })
+})
+
+/**
+ * Fail Transaction.
+ */
+test('fail Transaction', t => {
+  t.throws(() => {
+    arg.Transaction('test')
   })
 })

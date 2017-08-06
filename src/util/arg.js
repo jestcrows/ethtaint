@@ -14,7 +14,8 @@ const type = {
   Address: require('../primitives/address'),
   Amount: require('../primitives/amount'),
   Block: require('../primitives/block'),
-  Taint: require('../primitives/taint')
+  Taint: require('../primitives/taint'),
+  Transaction: require('../primitives/transaction')
 }
 
 /**
@@ -139,5 +140,17 @@ exports.Block = function Block (arg) {
 exports.Taint = function Taint (arg) {
   if (!(arg instanceof type.Taint)) {
     throw new Error('Argument must be Taint')
+  }
+}
+
+/**
+ * Confirm argument is Transaction.
+ * @param {Transaction|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not a Transaction.
+ */
+exports.Transaction = function Transaction (arg) {
+  if (!(arg instanceof type.Transaction)) {
+    throw new Error('Argument must be Transaction')
   }
 }
