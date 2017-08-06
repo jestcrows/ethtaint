@@ -49,7 +49,7 @@ test('hex protected', t => {
 /**
  * Get empty taints.
  */
-test('get empty taint', t => {
+test('get empty taints', t => {
   const address = new Address(testAddress)
   const taints = address.taints
   t.true(taints instanceof Set && taints.size === 0)
