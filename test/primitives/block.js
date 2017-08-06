@@ -51,3 +51,22 @@ test('number protected', t => {
     block.number = 'test'
   })
 })
+
+/**
+ * Get empty transactions.
+ */
+test('get empty transactions', t => {
+  const block = new Block(testBlockNumber)
+  const transactions = block.transactions
+  t.true(transactions instanceof Set && transactions.size === 0)
+})
+
+/**
+ * Transactions protected.
+ */
+test('transactions protected', t => {
+  const block = new Block(testBlockNumber)
+  t.throws(() => {
+    block.transactions = 'test'
+  })
+})

@@ -25,6 +25,7 @@ class Block {
     const priv = {}
     privs.set(this, priv)
     priv.number = number
+    priv.transactions = null
   }
 
   /**
@@ -35,6 +36,20 @@ class Block {
     const priv = privs.get(this)
     const number = priv.number
     return number
+  }
+
+  /**
+   * Contained taint-propagating transactions.
+   * @type {Set<Transaction>}
+   */
+  get transactions () {
+    const priv = privs.get(this)
+    const transactions = priv.transactions
+    if (transactions === null) {
+      return new Set()
+    } else {
+      return new Set(transactions)
+    }
   }
 }
 
