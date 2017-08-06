@@ -71,7 +71,8 @@ class Taint {
 
   /**
    * Add recipient.
-   * @param recipient {Address} - Recipient of taint.
+   * @param {module:primitives/address.Address} recipient
+   *     Recipient of taint.
    * @return {Taint} - This instance for chaining.
    */
   addRecipient (recipient) {
