@@ -5,6 +5,9 @@
 
 'use strict'
 
+// Imports
+const config = require('config')
+
 /**
  * Private members store.
  * @private
@@ -22,6 +25,7 @@ class Client {
   constructor () {
     const priv = {}
     privs.set(this, priv)
+    priv.apiKey = config.get('Etherscan.apiKey')
   }
 }
 
