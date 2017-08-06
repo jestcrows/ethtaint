@@ -145,7 +145,8 @@ exports.Taint = function Taint (arg) {
 
 /**
  * Confirm argument is Transaction.
- * @param {Transaction|*} arg - Argument.
+ * @param {module:primitives/transaction.Transaction|*} arg
+ *     Argument.
  * @return {undefined}
  * @throws {Error} - If arg is not a Transaction.
  */

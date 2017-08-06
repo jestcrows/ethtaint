@@ -41,7 +41,7 @@ class Block {
 
   /**
    * Contained taint-propagating transactions.
-   * @type {Set<Transaction>}
+   * @type {Set<module:primitives/transaction.Transaction>}
    */
   get transactions () {
     const priv = privs.get(this)
@@ -55,7 +55,7 @@ class Block {
 
   /**
    * Contained taint-propagating transactions.
-   * @type {Set<Transaction>}
+   * @type {Set<module:primitives/transaction.Transaction>}
    */
   get txs () {
     return this.transactions
