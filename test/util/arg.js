@@ -32,6 +32,26 @@ test('fail string', t => {
 })
 
 /**
+ * Succeed number.
+ */
+test('succeed number', t => {
+  const number = 8
+  t.notThrows(() => {
+    arg.number(number)
+  })
+})
+
+/**
+ * Fail number.
+ */
+test('fail number', t => {
+  const string = 'test'
+  t.throws(() => {
+    arg.number(string)
+  })
+})
+
+/**
  * Succeed addressHex.
  */
 test('succeed addressHex', t => {

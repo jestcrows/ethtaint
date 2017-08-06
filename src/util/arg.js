@@ -28,6 +28,18 @@ exports.string = function string (arg) {
 }
 
 /**
+ * Confirm argument is number literal.
+ * @param {number|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not a number literal.
+ */
+exports.number = function number (arg) {
+  if (!(typeof arg === 'number')) {
+    throw new Error('Argument must be number literal')
+  }
+}
+
+/**
  * Confirm argument is address hex.
  * @param {string|*} arg - Argument.
  * @return {undefined}
