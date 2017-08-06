@@ -58,7 +58,7 @@ test('get empty taints', t => {
 /**
  * Taints protected.
  */
-test('taint protected', t => {
+test('taints protected', t => {
   const address = new Address(testAddress)
   t.throws(() => {
     address.taints = 'test'
