@@ -133,7 +133,7 @@ exports.Block = function Block (arg) {
 
 /**
  * Confirm argument is Taint.
- * @param {Taint|*} arg - Argument.
+ * @param {module:primitives/taint.Taint|*} arg - Argument.
  * @return {undefined}
  * @throws {Error} - If arg is not a Taint.
  */

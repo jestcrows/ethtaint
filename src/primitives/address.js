@@ -41,7 +41,7 @@ class Address {
 
   /**
    * All collected taint.
-   * @type {Set<Taint>}
+   * @type {Set<module:primitives/taint.Taint>}
    */
   get taint () {
     const priv = privs.get(this)
@@ -55,7 +55,8 @@ class Address {
 
   /**
    * Add taint item.
-   * @param {Taint} taintItem - Taint item.
+   * @param {module:primitives/taint.Taint} taintItem
+   *     Taint item.
    * @return {module:primitives/address.Address}
    *     This instance for chaining.
    */
@@ -74,7 +75,8 @@ class Address {
 
   /**
    * Check whether has taint item.
-   * @param {Taint} taintItem - Taint item.
+   * @param {module:primitives/taint.Taint} taintItem
+   *     Taint item.
    * @return {boolean} - Whether has taint item.
    */
   hasTaint (taintItem) {
