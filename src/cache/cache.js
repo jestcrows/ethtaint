@@ -37,6 +37,17 @@ class Cache {
     const map = priv.map
     map.set(key, value)
   }
+
+  /**
+   * Get value for key.
+   * @param {*} key - Element key.
+   * @return {*} Element value.
+   */
+  async get (key) {
+    const priv = privs.get(this)
+    const map = priv.map
+    return map.get(key)
+  }
 }
 
 // Expose
