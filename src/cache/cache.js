@@ -24,6 +24,19 @@ class Cache {
     privs.set(this, priv)
     priv.map = new Map()
   }
+
+  /**
+   * Set key to value.
+   * @param {*} key - Element key.
+   * @param {*} value - Element value.
+   * @return {module:cache/cache.Cache}
+   *     This instance for chaining.
+   */
+  async set (key, value) {
+    const priv = privs.get(this)
+    const map = priv.map
+    map.set(key, value)
+  }
 }
 
 // Expose

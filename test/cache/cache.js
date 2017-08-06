@@ -12,3 +12,13 @@ test('create', t => {
     new Cache()
   })
 })
+
+/**
+ * Set item.
+ */
+test('set item', async t => {
+  const cache = new Cache()
+  await t.notThrows(async () => {
+    await cache.set('testkey', 'testval')
+  })
+})
