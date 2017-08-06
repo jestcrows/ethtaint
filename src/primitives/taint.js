@@ -166,7 +166,7 @@ class Taint {
     arg.Transaction(tx)
 
     const priv = privs.get(this)
-    if(priv.transactions === null) {
+    if (priv.transactions === null) {
       priv.transactions = new Set()
     }
     const transactions = priv.transactions
