@@ -114,6 +114,26 @@ class Transaction {
       return new Set(taints)
     }
   }
+
+  /**
+   * Add taint item.
+   * @param {module:primitives/taint.Taint} taint
+   *     Taint item.
+   * @return {module:primitives/transaction.Transaction}
+   *     This instance for chaining.
+   */
+  addTaint (taint) {
+    // Validate arguments
+    arg.Taint(taint)
+
+    const priv = privs.get(this)
+    if (priv.taints === null) {
+      priv.taints = new Set()
+    }
+    const taints = priv.taints
+    taints.add(taint)
+    return this
+  }
 }
 
 // Expose
