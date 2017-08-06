@@ -40,6 +40,9 @@ exports.number = function number (arg) {
   if (Number.isNaN(arg)) {
     throw new Error('Argument must not be NaN')
   }
+  if (!Number.isFinite(arg)) {
+    throw new Error('Argument must be finite')
+  }
 }
 
 /**

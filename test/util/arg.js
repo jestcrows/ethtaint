@@ -61,6 +61,24 @@ test('fail number with NaN', t => {
 })
 
 /**
+ * Fail number with Infinity.
+ */
+test('fail number with Infinity', t => {
+  t.throws(() => {
+    arg.number(Number.POSITIVE_INFINITY)
+  })
+})
+
+/**
+ * Fail number with -Infinity.
+ */
+test('fail number with -Infinity', t => {
+  t.throws(() => {
+    arg.number(Number.NEGATIVE_INFINITY)
+  })
+})
+
+/**
  * Succeed addressHex.
  */
 test('succeed addressHex', t => {
