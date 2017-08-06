@@ -29,8 +29,7 @@ class Cache {
    * Set key to value.
    * @param {*} key - Element key.
    * @param {*} value - Element value.
-   * @return {module:cache/cache.Cache}
-   *     This instance for chaining.
+   * @return {undefined}
    */
   async set (key, value) {
     const priv = privs.get(this)
