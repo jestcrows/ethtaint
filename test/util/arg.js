@@ -52,6 +52,16 @@ test('fail number', t => {
 })
 
 /**
+ * Fail number with NaN.
+ */
+test('fail number with NaN', t => {
+  const NaN = Math.sqrt(-1)
+  t.throws(() => {
+    arg.number(NaN)
+  })
+})
+
+/**
  * Succeed addressHex.
  */
 test('succeed addressHex', t => {
