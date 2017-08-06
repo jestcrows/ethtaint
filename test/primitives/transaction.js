@@ -153,3 +153,45 @@ test('block protected', t => {
     tx.block = 'test'
   })
 })
+
+/**
+ * Get hash.
+ */
+test('get hash', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.true(tx.hash === hash)
+})
+
+/**
+ * Hash protected.
+ */
+test('hash protected', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const to = new Address(testAddress2)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  const tx = new Transaction(
+    block,
+    hash,
+    from,
+    to,
+    amount
+  )
+  t.throws(() => {
+    tx.hash = 'test'
+  })
+})

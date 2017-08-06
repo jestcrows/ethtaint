@@ -54,6 +54,16 @@ class Transaction {
     const block = priv.block
     return block
   }
+
+  /**
+   * Transaction hash.
+   * @type {string}
+   */
+  get hash () {
+    const priv = privs.get(this)
+    const hash = priv.hash
+    return hash
+  }
 }
 
 // Expose
