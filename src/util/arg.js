@@ -37,7 +37,7 @@ exports.number = function number (arg) {
   if (!(typeof arg === 'number')) {
     throw new Error('Argument must be number literal')
   }
-  if (isNaN(arg)) {
+  if (Number.isNaN(arg)) {
     throw new Error('Argument must not be NaN')
   }
 }
