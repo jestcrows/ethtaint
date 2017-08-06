@@ -35,7 +35,8 @@ const scalingFactor = {
 const privs = new WeakMap()
 
 /**
- * Amount of ETH.
+ * An amount of ether.
+ * @static
  */
 class Amount {
   /**

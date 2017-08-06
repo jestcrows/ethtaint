@@ -9,7 +9,8 @@
 const privs = new WeakMap()
 
 /**
- * An Ethereum block chain address.
+ * An Ethereum address.
+ * @static
  */
 class Address {
   /**

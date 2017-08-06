@@ -10,6 +10,7 @@ const privs = new WeakMap()
 
 /**
  * An Ethereum transaction.
+ * @static
  */
 class Transaction {
   /**

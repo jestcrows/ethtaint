@@ -10,6 +10,7 @@ const privs = new WeakMap()
 
 /**
  * An Ethereum block.
+ * @static
  */
 class Block {
   /**

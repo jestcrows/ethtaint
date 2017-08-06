@@ -10,6 +10,7 @@ const privs = new WeakMap()
 
 /**
  * A taint item.
+ * @static
  */
 class Taint {
   /**
