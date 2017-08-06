@@ -60,6 +60,26 @@ class Block {
   get txs () {
     return this.transactions
   }
+
+  /**
+   * Add transaction.
+   * @param {module:primitives/transaction.Transaction} tx
+   *     Transaction.
+   * @return {module:primitives/block.Block}
+   *     This instance for chaining.
+   */
+  addTransaction (tx) {
+    // Validate arguments
+    arg.Transaction(tx)
+
+    const priv = privs.get(this)
+    if (priv.transactions === null) {
+      priv.transactions = new Set()
+    }
+    const transactions = priv.transactions
+    transactions.add(tx)
+    return this
+  }
 }
 
 // Expose
