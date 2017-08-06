@@ -46,6 +46,18 @@ exports.number = function number (arg) {
 }
 
 /**
+ * Confirm argument is integer literal.
+ * @param {number|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not an integer literal.
+ */
+exports.integer = function integer (arg) {
+  if (!Number.isInteger(arg)) {
+    throw new Error('Argument must be integer literal')
+  }
+}
+
+/**
  * Confirm argument is address hex.
  * @param {string|*} arg - Argument.
  * @return {undefined}

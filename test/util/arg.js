@@ -79,6 +79,63 @@ test('fail number with -Infinity', t => {
 })
 
 /**
+ * Succeed integer.
+ */
+test('succeed integer', t => {
+  const integer = 8
+  t.notThrows(() => {
+    arg.integer(integer)
+  })
+})
+
+/**
+ * Fail integer with string.
+ */
+test('fail integer with string', t => {
+  const string = 'test'
+  t.throws(() => {
+    arg.integer(string)
+  })
+})
+
+/**
+ * Fail integer with NaN.
+ */
+test('fail integer with NaN', t => {
+  t.throws(() => {
+    arg.integer(Number.NaN)
+  })
+})
+
+/**
+ * Fail integer with Infinity.
+ */
+test('fail integer with Infinity', t => {
+  t.throws(() => {
+    arg.integer(Number.POSITIVE_INFINITY)
+  })
+})
+
+/**
+ * Fail integer with -Infinity.
+ */
+test('fail integer with -Infinity', t => {
+  t.throws(() => {
+    arg.integer(Number.NEGATIVE_INFINITY)
+  })
+})
+
+/**
+ * Fail integer with float.
+ */
+test('fail integer with float', t => {
+  const float = 5.8
+  t.throws(() => {
+    arg.integer(float)
+  })
+})
+
+/**
  * Succeed addressHex.
  */
 test('succeed addressHex', t => {
