@@ -4,7 +4,7 @@
   "license": "Unlicense",
   "scripts": {
     "test": "ava",
-    "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r"
+    "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r --pedantic"
   },
   "dependencies": {
     "bignumber.js": "^4.0.2",
