@@ -54,7 +54,7 @@ class Address {
 
   /**
    * Add taint item.
-   * @param taintItem {Taint} - Taint item.
+   * @param {Taint} taintItem - Taint item.
    * @return {Address} - This instance for chaining.
    */
   addTaint (taintItem) {
