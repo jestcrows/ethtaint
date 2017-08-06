@@ -22,7 +22,7 @@ const type = {
  * Confirm argument is string literal.
  * @param {string|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a string literal.
+ * @throws {Error} If arg is not a string literal.
  */
 exports.string = function string (arg) {
   if (!(typeof arg === 'string')) {
@@ -34,7 +34,7 @@ exports.string = function string (arg) {
  * Confirm argument is number literal.
  * @param {number|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a number literal.
+ * @throws {Error} If arg is not a number literal.
  */
 exports.number = function number (arg) {
   if (!(typeof arg === 'number')) {
@@ -52,7 +52,7 @@ exports.number = function number (arg) {
  * Confirm argument is integer literal.
  * @param {number|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not an integer literal.
+ * @throws {Error} If arg is not an integer literal.
  */
 exports.integer = function integer (arg) {
   if (!Number.isInteger(arg)) {
@@ -64,7 +64,7 @@ exports.integer = function integer (arg) {
  * Confirm argument is address hex.
  * @param {string|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not an address hex.
+ * @throws {Error} If arg is not an address hex.
  */
 exports.addressHex = function addressHex (arg) {
   if (!ethereumAddress.isAddress(arg)) {
@@ -77,7 +77,7 @@ exports.addressHex = function addressHex (arg) {
  * TODO: Validate transaction hash format.
  * @param {string|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a string literal.
+ * @throws {Error} If arg is not a string literal.
  */
 exports.transactionHash = function transactionHash (arg) {
   exports.string(arg)
@@ -87,7 +87,7 @@ exports.transactionHash = function transactionHash (arg) {
  * Confirm argument is BigNumber.
  * @param {BigNumber|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a BigNumber.
+ * @throws {Error} If arg is not a BigNumber.
  */
 exports.BigNumber = function BigNumber (arg) {
   if (!(arg instanceof type.BigNumber)) {
@@ -99,7 +99,7 @@ exports.BigNumber = function BigNumber (arg) {
  * Confirm argument is Address.
  * @param {module:primitives/address.Address|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not an Address.
+ * @throws {Error} If arg is not an Address.
  */
 exports.Address = function Address (arg) {
   if (!(arg instanceof type.Address)) {
@@ -111,7 +111,7 @@ exports.Address = function Address (arg) {
  * Confirm argument is Amount.
  * @param {module:primitives/amount.Amount|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not an Amount.
+ * @throws {Error} If arg is not an Amount.
  */
 exports.Amount = function Amount (arg) {
   if (!(arg instanceof type.Amount)) {
@@ -123,7 +123,7 @@ exports.Amount = function Amount (arg) {
  * Confirm argument is Block.
  * @param {module:primitives/block.Block|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a Block.
+ * @throws {Error} If arg is not a Block.
  */
 exports.Block = function Block (arg) {
   if (!(arg instanceof type.Block)) {
@@ -135,7 +135,7 @@ exports.Block = function Block (arg) {
  * Confirm argument is Taint.
  * @param {module:primitives/taint.Taint|*} arg - Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a Taint.
+ * @throws {Error} If arg is not a Taint.
  */
 exports.Taint = function Taint (arg) {
   if (!(arg instanceof type.Taint)) {
@@ -148,7 +148,7 @@ exports.Taint = function Taint (arg) {
  * @param {module:primitives/transaction.Transaction|*} arg
  *     Argument.
  * @return {undefined}
- * @throws {Error} - If arg is not a Transaction.
+ * @throws {Error} If arg is not a Transaction.
  */
 exports.Transaction = function Transaction (arg) {
   if (!(arg instanceof type.Transaction)) {

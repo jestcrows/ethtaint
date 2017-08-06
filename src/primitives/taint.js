@@ -93,7 +93,7 @@ class Taint {
    * Check whether has recipient.
    * @param {module:primitives/address.Address} address
    *     Queried address.
-   * @return {boolean} - Whether has address as recipient.
+   * @return {boolean} Whether has address as recipient.
    */
   hasRecipient (address) {
     // Validate arguments
@@ -112,7 +112,7 @@ class Taint {
    * Check whether has address.
    * @param {module:primitives/address.Address} address
    *     Queried address.
-   * @return {boolean} - Whether has address.
+   * @return {boolean} Whether has address.
    */
   hasAddress (address) {
     // Validate arguments

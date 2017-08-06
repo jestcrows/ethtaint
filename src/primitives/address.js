@@ -77,7 +77,7 @@ class Address {
    * Check whether has taint item.
    * @param {module:primitives/taint.Taint} taintItem
    *     Taint item.
-   * @return {boolean} - Whether has taint item.
+   * @return {boolean} Whether has taint item.
    */
   hasTaint (taintItem) {
     // Validate arguments
