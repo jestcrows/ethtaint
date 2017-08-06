@@ -13,9 +13,8 @@ const testValue = '78953286724'
  * Value must be BigNumber.
  */
 test('value must be BigNumber', t => {
-  const number = 8
   t.throws(() => {
-    new Amount(number)
+    new Amount(testNumber)
   })
 })
 
@@ -23,7 +22,7 @@ test('value must be BigNumber', t => {
  * Create a new amount.
  */
 test('create', t => {
-  const value = new BigNumber('8')
+  const value = new BigNumber(testValue)
   t.notThrows(() => {
     new Amount(value)
   })
