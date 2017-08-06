@@ -80,6 +80,25 @@ class Block {
     transactions.add(tx)
     return this
   }
+
+  /**
+   * Check whether contains transaction.
+   * @param {module:primitives/transaction.Transaction} tx
+   *     Queried transaction.
+   * @return {boolean} Whether contains transaction.
+   */
+  hasTransaction (tx) {
+    // Validate arguments
+    arg.Transaction(tx)
+
+    const priv = privs.get(this)
+    const transactions = priv.transactions
+    if (transactions === null) {
+      return false
+    } else {
+      return transactions.has(tx)
+    }
+  }
 }
 
 // Expose
