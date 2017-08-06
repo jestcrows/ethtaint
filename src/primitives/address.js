@@ -54,6 +54,20 @@ class Address {
   }
 
   /**
+   * Has any taint.
+   * @type {boolean}
+   */
+  get tainted () {
+    const priv = privs.get(this)
+    const taints = priv.taints
+    if (taints === null) {
+      return false
+    } else {
+      return (taints.size !== 0)
+    }
+  }
+
+  /**
    * Add taint item.
    * @param {module:primitives/taint.Taint} taint
    *     Taint item.

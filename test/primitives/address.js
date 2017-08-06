@@ -138,3 +138,31 @@ test('has added taint', t => {
   address.addTaint(taintItem)
   t.true(address.hasTaint(taintItem))
 })
+
+/**
+ * Not tainted when empty.
+ */
+test('not tainted', t => {
+  const address = new Address(testAddress)
+  t.false(address.tainted)
+})
+
+/**
+ * Tainted after added.
+ */
+test('tainted', t => {
+  const address = new Address(testAddress)
+  const taint = new Taint(address)
+  address.addTaint(taint)
+  t.true(address.tainted)
+})
+
+/**
+ * Tainted protected.
+ */
+test('tainted protected', t => {
+  const address = new Address(testAddress)
+  t.throws(() => {
+    address.tainted = 'test'
+  })
+})
