@@ -6,6 +6,9 @@
     "test": "ava",
     "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r --pedantic"
   },
+  "engines": {
+    "node": ">=8.2.1"
+  },
   "dependencies": {
     "bignumber.js": "^4.0.2",
     "ethereum-address": "0.0.4"
