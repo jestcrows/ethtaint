@@ -32,6 +32,24 @@ test('fail string', t => {
 })
 
 /**
+ * Succeed addressHex.
+ */
+test('succeed addressHex', t => {
+  t.notThrows(() => {
+    arg.addressHex(testAddress)
+  })
+})
+
+/**
+ * Fail addressHex.
+ */
+test('fail addressHex', t => {
+  t.throws(() => {
+    arg.addressHex('test')
+  })
+})
+
+/**
  * Succeed Address.
  */
 test('succeed Address', t => {

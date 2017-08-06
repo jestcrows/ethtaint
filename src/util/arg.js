@@ -6,6 +6,9 @@
 'use strict'
 
 // Imports
+const ethereumAddress = require('ethereum-address')
+
+// Type imports
 const type = {
   Address: require('../primitives/address'),
   Block: require('../primitives/block'),
@@ -21,6 +24,18 @@ const type = {
 exports.string = function string (arg) {
   if (!(typeof arg === 'string')) {
     throw new Error('Argument must be string literal')
+  }
+}
+
+/**
+ * Confirm argument is address hex.
+ * @param {string|*} arg - Argument.
+ * @return {undefined}
+ * @throws {Error} - If arg is not an address hex.
+ */
+exports.addressHex = function addressHex (arg) {
+  if (!ethereumAddress.isAddress(arg)) {
+    throw new Error('Argument must be an Ethereum address')
   }
 }
 

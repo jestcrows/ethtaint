@@ -15,5 +15,8 @@
     "ignore": [
       "test"
     ]
+  },
+  "dependencies": {
+    "ethereum-address": "0.0.4"
   }
 }
