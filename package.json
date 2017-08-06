@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bignumber.js": "^4.0.2",
+    "config": "^1.26.1",
     "ethereum-address": "0.0.4"
   },
   "devDependencies": {
