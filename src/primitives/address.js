@@ -26,7 +26,7 @@ class Address {
     const priv = {}
     privs.set(this, priv)
     priv.hex = hex
-    priv.taint = null
+    priv.taints = null
   }
 
   /**
@@ -45,50 +45,50 @@ class Address {
    */
   get taints () {
     const priv = privs.get(this)
-    const taint = priv.taint
-    if (taint === null) {
+    const taints = priv.taints
+    if (taints === null) {
       return new Set()
     } else {
-      return new Set(taint)
+      return new Set(taints)
     }
   }
 
   /**
    * Add taint item.
-   * @param {module:primitives/taint.Taint} taintItem
+   * @param {module:primitives/taint.Taint} taint
    *     Taint item.
    * @return {module:primitives/address.Address}
    *     This instance for chaining.
    */
-  addTaint (taintItem) {
+  addTaint (taint) {
     // Validate arguments
-    arg.Taint(taintItem)
+    arg.Taint(taint)
 
     const priv = privs.get(this)
-    if (priv.taint === null) {
-      priv.taint = new Set()
+    if (priv.taints === null) {
+      priv.taints = new Set()
     }
-    const taint = priv.taint
-    taint.add(taintItem)
+    const taints = priv.taints
+    taints.add(taint)
     return this
   }
 
   /**
    * Check whether has taint item.
-   * @param {module:primitives/taint.Taint} taintItem
+   * @param {module:primitives/taint.Taint} taint
    *     Taint item.
    * @return {boolean} Whether has taint item.
    */
-  hasTaint (taintItem) {
+  hasTaint (taint) {
     // Validate arguments
-    arg.Taint(taintItem)
+    arg.Taint(taint)
 
     const priv = privs.get(this)
-    const taint = priv.taint
-    if (taint === null) {
+    const taints = priv.taints
+    if (taints === null) {
       return false
     } else {
-      return taint.has(taintItem)
+      return taints.has(taint)
     }
   }
 }
