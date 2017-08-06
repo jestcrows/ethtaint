@@ -31,10 +31,7 @@ const scalingFactor = {
   ether: '1000000000000000000'
 }
 
-/**
- * Private members store.
- * @private
- */
+/** Private members store. */
 const privs = new WeakMap()
 
 /**
