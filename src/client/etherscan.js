@@ -6,17 +6,9 @@
 'use strict'
 
 // Imports
-const userAgent = require('../net/useragent')
 const { URL } = require('url')
 const config = require('config')
-const requestGlobal = require('request-promise-native')
-
-// Configure request
-const request = requestGlobal.defaults({
-  headers: {
-    'User-Agent': userAgent
-  }
-})
+const request = require('../net/request')
 
 /**
  * Private members store.
