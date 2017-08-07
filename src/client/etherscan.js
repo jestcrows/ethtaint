@@ -60,9 +60,60 @@ class Client {
   }
 
   /**
+   * An Ethereum transaction.
+   * @todo Determine timeStamp meaning.
+   * @todo Determine timeStamp encoding.
+   * @todo Can only contract transactions fail with an error?
+   * @todo Determine cumulativeGasUsed meaning.
+   * @typedef {Object} transaction
+   * @prop {string} blockNumber
+   *     Containing block number. Integer string.
+   * @prop {string} timeStamp
+   *     Integer string.
+   * @prop {string} hash
+   *     Transaction hash.
+   * @prop {string} nonce
+   *     Transaction nonce. Integer string.
+   * @prop {string} blockHash
+   *     Containing block hash.
+   * @prop {string} transactionIndex
+   *     Index of transaction in containing block. Integer string.
+   * @prop {string} from
+   *     Hex representation of source address.
+   * @prop {string} to
+   *     Hex representation of target address.
+   *     Empty string for contract creation transactions.
+   * @prop {string} value
+   *     Amount transferred in wei. Integer string.
+   * @prop {string} gas
+   *     Gas limit in gas. Integer string.
+   * @prop {string} gasPrice
+   *     Gas price in wei. Integer string.
+   * @prop {string} isError
+   *     Whether transaction failed with an error.
+   *     Integer string "1" for error.
+   *     Integer string "0" for no error.
+   * @prop {string} input
+   *     Transaction data.
+   *     Hexadecimal string prepended with "0x".
+   *     For empty data value is "0x".
+   * @prop {string} contractAddress
+   *     Hex representation of created contract address.
+   *     Empty string for no contract created.
+   * @prop {string} cumulativeGasUsed
+   *     Integer string.
+   * @prop {string} gasUsed
+   *     Gas used by transaction in gas. Integer string.
+   * @prop {string} confirmations
+   *     Current number of containing block confirmations.
+   *     Integer string.
+   */
+
+  /**
    * Get list of account transactions.
    * @param {string} address - Account address.
-   * @return {object[]} List of account transactions.
+   * @return {module:client/etherscan~transaction[]}
+   *     List of account transactions.
    */
   async listAccountTransactions (address) {
     // Validate arguments
