@@ -112,16 +112,29 @@ class Client {
   /**
    * Get list of account transactions.
    * @param {string} address - Account address.
+   * @param {object} options - Request options.
+   * @param {number} [options.startBlock=null]
+   *     Block number of query range low end inclusive.
    * @return {module:client/etherscan~transaction[]}
    *     List of account transactions.
    */
-  async listAccountTransactions (address) {
+  async listAccountTransactions (
+    address, {
+      startBlock = null
+    } = {}
+  ) {
     // Validate arguments
     arg.addressHex(address)
+    if (startBlock !== null) {
+      arg.integer(startBlock)
+    }
 
     // Construct request address
     const requestUrl = new URL(url.account.listTransactions)
     requestUrl.searchParams.set('address', address)
+    if (startBlock !== null) {
+      requestUrl.searchParams.set('startBlock', startBlock)
+    }
     const requestAddress = requestUrl.toString()
 
     // Acquire RPC response
