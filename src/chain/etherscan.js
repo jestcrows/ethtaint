@@ -5,6 +5,9 @@
 
 'use strict'
 
+// Imports
+const Client = require('../client/etherscan-throttled')
+
 /**
  * Private members store.
  * @private
@@ -22,6 +25,7 @@ class ChainAgent {
   constructor () {
     const priv = {}
     privs.set(this, priv)
+    priv.client = new Client()
   }
 }
 
