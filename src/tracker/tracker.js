@@ -161,6 +161,9 @@ class Tracker extends EventEmitter {
     // Validate arguments
     arg.addressHex(sourceHex)
 
+    // Process arguments
+    sourceHex = sourceHex.toLowerCase()
+
     // Private members
     const priv = privs.get(this)
     const cache = priv.cache
