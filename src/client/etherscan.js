@@ -14,8 +14,10 @@ const requestGlobal = require('request-promise-native')
 // Construct user agent string
 let userAgent = 'ethtaint'
 if (version) {
-  userAgent += ' ' + version.toString()
+  userAgent += '/' + version.toString()
 }
+
+console.log(userAgent)
 
 // Configure request
 const request = requestGlobal.defaults({
