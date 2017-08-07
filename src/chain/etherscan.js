@@ -48,7 +48,7 @@ async function mapTransaction (clientTx, cache) {
   }
 
   // Map source address
-  const fromHex = clientTx.from
+  const fromHex = clientTx.from.toLowerCase()
   let from = await cache.address.get(fromHex)
   if (from === undef) {
     from = new Address(fromHex)
@@ -56,7 +56,7 @@ async function mapTransaction (clientTx, cache) {
   }
 
   // Map target address
-  const toHex = clientTx.to
+  const toHex = clientTx.to.toLowerCase()
   let to
   if (toHex === '') {
     to = null
@@ -69,7 +69,7 @@ async function mapTransaction (clientTx, cache) {
   }
 
   // Map transaction
-  const hash = clientTx.hash
+  const hash = clientTx.hash.toLowerCase()
   let tx = await cache.tx.get(hash)
   if (tx === undef) {
     // Construct amount
