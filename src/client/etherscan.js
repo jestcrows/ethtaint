@@ -110,13 +110,19 @@ class Client {
    *     Block number of query range low end inclusive.
    * @param {number} [options.endBlock=null]
    *     Block number of query range high end inclusive.
+   * @param {number} [options.page=null]
+   *     Page number to request.
+   * @param {number} [options.pageSize=null]
+   *     Page size to request.
    * @return {module:client/etherscan~transaction[]}
    *     List of account transactions.
    */
   async listAccountTransactions (
     address, {
       startBlock = null,
-      endBlock = null
+      endBlock = null,
+      page = null,
+      pageSize = null
     } = {}
   ) {
     // Validate arguments
@@ -127,6 +133,12 @@ class Client {
     if (endBlock !== null) {
       arg.integer(endBlock)
     }
+    if (page !== null) {
+      arg.integer(page)
+    }
+    if (pageSize !== null) {
+      arg.integer(pageSize)
+    }
 
     // Construct request address
     const requestUrl = new URL(url.account.listTransactions)
@@ -136,6 +148,12 @@ class Client {
     }
     if (endBlock !== null) {
       requestUrl.searchParams.set('endBlock', endBlock)
+    }
+    if (page !== null) {
+      requestUrl.searchParams.set('page', page)
+    }
+    if (pageSize !== null) {
+      requestUrl.searchParams.set('offset', pageSize)
     }
     const requestAddress = requestUrl.toString()
 

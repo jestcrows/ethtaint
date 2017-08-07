@@ -11,6 +11,7 @@ const testUnusedAddress =
   '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testStartBlock = 79728
 const testEndBlock = 101250
+const testPageSize = 8
 
 // Sleep before each test
 test.beforeEach('rate limit', async t => {
@@ -137,4 +138,84 @@ test.serial('start and end blocks', async t => {
   const numTxs = txs.length
   console.log('Found ' + numTxs + ' txs')
   t.true(numTxs !== 0)
+})
+
+/**
+ * First page.
+ */
+test.serial('first page', async t => {
+  console.log('Acquiring first page')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      page: 1,
+      pageSize: testPageSize
+    })
+  await t.notThrows(prom)
+  const txs = await prom
+  const numTxs = txs.length
+  console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs === testPageSize)
+})
+
+/**
+ * Second page.
+ */
+test.serial('second page', async t => {
+  console.log('Acquiring second page')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      page: 2,
+      pageSize: testPageSize
+    })
+  await t.notThrows(prom)
+  const txs = await prom
+  const numTxs = txs.length
+  console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs === testPageSize)
+})
+
+/**
+ * Empty page.
+ */
+test.serial('empty page', async t => {
+  console.log('Acquiring empty page')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      page: 10000,
+      pageSize: 9000
+    })
+  await t.notThrows(prom)
+  const txs = await prom
+  const numTxs = txs.length
+  console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs === 0)
+})
+
+/**
+ * Bad page number.
+ */
+test.serial('bad page number', async t => {
+  console.log('Acquiring with bad page number')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      page: 'test'
+    })
+  await t.throws(prom)
+})
+
+/**
+ * Bad page size.
+ */
+test.serial('bad page size', async t => {
+  console.log('Acquiring with bad page size')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      pageSize: 'test'
+    })
+  await t.throws(prom)
 })
