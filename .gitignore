@@ -65,3 +65,6 @@ jsdoc/
 
 # Development config file
 config/development.json
+
+# Trace output directory
+trace/
