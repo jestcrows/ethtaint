@@ -115,12 +115,15 @@ class Client {
    * @param {object} options - Request options.
    * @param {number} [options.startBlock=null]
    *     Block number of query range low end inclusive.
+   * @param {number} [options.endBlock=null]
+   *     Block number of query range high end inclusive.
    * @return {module:client/etherscan~transaction[]}
    *     List of account transactions.
    */
   async listAccountTransactions (
     address, {
-      startBlock = null
+      startBlock = null,
+      endBlock = null
     } = {}
   ) {
     // Validate arguments
@@ -128,12 +131,18 @@ class Client {
     if (startBlock !== null) {
       arg.integer(startBlock)
     }
+    if (endBlock !== null) {
+      arg.integer(endBlock)
+    }
 
     // Construct request address
     const requestUrl = new URL(url.account.listTransactions)
     requestUrl.searchParams.set('address', address)
     if (startBlock !== null) {
       requestUrl.searchParams.set('startBlock', startBlock)
+    }
+    if (endBlock !== null) {
+      requestUrl.searchParams.set('endBlock', endBlock)
     }
     const requestAddress = requestUrl.toString()
 

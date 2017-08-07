@@ -10,6 +10,7 @@ const testAddress = '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
 const testUnusedAddress =
   '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 const testStartBlock = 79728
+const testEndBlock = 101250
 
 // Sleep before each test
 test.beforeEach('rate limit', async t => {
@@ -88,4 +89,52 @@ test.serial('bad start block', async t => {
       startBlock: 'test'
     })
   await t.throws(prom)
+})
+
+/**
+ * Valid end block.
+ */
+test.serial('valid end block', async t => {
+  console.log('Acquire with valid end block')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      endBlock: testEndBlock
+    })
+  await t.notThrows(prom)
+  const txs = await prom
+  const numTxs = txs.length
+  console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs !== 0)
+})
+
+/**
+ * Bad end block.
+ */
+test.serial('bad end block', async t => {
+  console.log('Acquire with bad end block')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      endBlock: 'test'
+    })
+  await t.throws(prom)
+})
+
+/**
+ * Start and end blocks.
+ */
+test.serial('start and end blocks', async t => {
+  console.log('Acquire with start and end blocks')
+  const client = new Client()
+  const prom = client
+    .listAccountTransactions(testAddress, {
+      startBlock: testStartBlock,
+      endBlock: testEndBlock
+    })
+  await t.notThrows(prom)
+  const txs = await prom
+  const numTxs = txs.length
+  console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs !== 0)
 })
