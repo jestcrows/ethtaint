@@ -3,6 +3,8 @@
 'use strict'
 
 // Imports
+const fs = require('fs')
+const mkdirp = require('mkdirp')
 const version = require('project-version')
 const program = require('commander')
 const logUpdate = require('log-update')
@@ -39,14 +41,18 @@ function log () {
 }
 
 // Trace taint from specified address
+mkdirp.sync('trace')
+const fileName = 'trace/' + sourceHex
 async function traceAddresses (sourceHex) {
   log('Tracing taint from: ' + sourceHex)
   update()
+  fs.writeFileSync(fileName, sourceHex + '\n')
   const tracker = new ethtaint.Tracker()
   try {
     tracker.on('taint', address => {
       tainted++
       log(address.hex)
+      fs.appendFileSync(fileName, address.hex + '\n')
     })
     tracker.on('tracedAddress', address => {
       traced++
