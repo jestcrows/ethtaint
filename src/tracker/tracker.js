@@ -7,6 +7,7 @@
 
 // Imports
 const Cache = require('../cache/cache')
+const ChainAgent = require('../chain/etherscan')
 
 /**
  * Private members store.
@@ -30,6 +31,7 @@ class Tracker {
       address: new Cache(),
       tx: new Cache()
     }
+    priv.chain = new ChainAgent(priv.cache)
   }
 }
 
