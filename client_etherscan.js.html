@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/etherscan.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/etherscan.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Etherscan API client.
+ * @module client/etherscan
+ */
+
+'use strict'
+
+// Imports
+const { URL } = require('url')
+const config = require('config')
+const request = require('../net/request')
+
+/**
+ * Private members store.
+ * @private
+ */
+const privs = new WeakMap()
+
+/**
+ * Etherscan API URLs.
+ * @private
+ */
+const url = {}
+
+/** Base URL. */
+url.base = new URL('https://api.etherscan.io/api')
+
+/** Account module URLs. */
+url.account = {}
+
+/** Account base URL. */
+url.account.base = new URL(url.base)
+url.account.base
+  .searchParams.set('module', 'account')
+
+/** Account -> List Transactions URL. */
+url.account.listTransactions = new URL(url.account.base)
+url.account.listTransactions
+  .searchParams.set('action', 'txlist')
+
+/**
+ * Etherscan API client.
+ * @static
+ */
+class Client {
+  /**
+   * No parameters.
+   */
+  constructor () {
+    const priv = {}
+    privs.set(this, priv)
+    priv.apiKey = config.get('Etherscan.apiKey')
+  }
+
+  /**
+   * An Ethereum transaction.
+   * @todo Determine timeStamp meaning.
+   * @todo Determine timeStamp encoding.
+   * @todo Can only contract transactions fail with an error?
+   * @todo Determine cumulativeGasUsed meaning.
+   * @typedef {Object} transaction
+   * @prop {string} blockNumber
+   *     Containing block number. Integer string.
+   * @prop {string} timeStamp
+   *     Integer string.
+   * @prop {string} hash
+   *     Transaction hash.
+   * @prop {string} nonce
+   *     Transaction nonce. Integer string.
+   * @prop {string} blockHash
+   *     Containing block hash.
+   * @prop {string} transactionIndex
+   *     Index of transaction in containing block. Integer string.
+   * @prop {string} from
+   *     Hex representation of source address.
+   * @prop {string} to
+   *     Hex representation of target address.
+   *     Empty string for contract creation transactions.
+   * @prop {string} value
+   *     Amount transferred in wei. Integer string.
+   * @prop {string} gas
+   *     Gas limit in gas. Integer string.
+   * @prop {string} gasPrice
+   *     Gas price in wei. Integer string.
+   * @prop {string} isError
+   *     Whether transaction failed with an error.
+   *     Integer string "1" for error.
+   *     Integer string "0" for no error.
+   * @prop {string} input
+   *     Transaction data.
+   *     Hexadecimal string prepended with "0x".
+   *     For empty data value is "0x".
+   * @prop {string} contractAddress
+   *     Hex representation of created contract address.
+   *     Empty string for no contract created.
+   * @prop {string} cumulativeGasUsed
+   *     Integer string.
+   * @prop {string} gasUsed
+   *     Gas used by transaction in gas. Integer string.
+   * @prop {string} confirmations
+   *     Current number of containing block confirmations.
+   *     Integer string.
+   */
+
+  /**
+   * Get list of account transactions.
+   * @param {string} address - Account address.
+   * @param {object} options - Request options.
+   * @param {number} [options.startBlock=null]
+   *     Block number of query range low end inclusive.
+   * @param {number} [options.endBlock=null]
+   *     Block number of query range high end inclusive.
+   * @param {number} [options.page=null]
+   *     Page number to request.
+   * @param {number} [options.pageSize=null]
+   *     Page size to request.
+   * @return {module:client/etherscan~transaction[]}
+   *     List of account transactions.
+   */
+  async listAccountTransactions (
+    address, {
+      startBlock = null,
+      endBlock = null,
+      page = null,
+      pageSize = null
+    } = {}
+  ) {
+    // Validate arguments
+    arg.addressHex(address)
+    if (startBlock !== null) {
+      arg.integer(startBlock)
+    }
+    if (endBlock !== null) {
+      arg.integer(endBlock)
+    }
+    if (page !== null) {
+      arg.integer(page)
+    }
+    if (pageSize !== null) {
+      arg.integer(pageSize)
+    }
+
+    // Private members
+    const priv = privs.get(this)
+
+    // Construct request address
+    const requestUrl = new URL(url.account.listTransactions)
+    requestUrl.searchParams.set('address', address)
+    if (startBlock !== null) {
+      requestUrl.searchParams.set('startBlock', startBlock)
+    }
+    if (endBlock !== null) {
+      requestUrl.searchParams.set('endBlock', endBlock)
+    }
+    if (page !== null) {
+      requestUrl.searchParams.set('page', page)
+    }
+    if (pageSize !== null) {
+      requestUrl.searchParams.set('offset', pageSize)
+    }
+    if (priv.apiKey !== null) {
+      requestUrl.searchParams.set('apikey', priv.apiKey)
+    }
+    const requestAddress = requestUrl.toString()
+
+    // Acquire RPC response
+    const rpcResponseJson = await request.get(requestAddress)
+    const rpcResponse = JSON.parse(rpcResponseJson)
+
+    // Extract result
+    const result = rpcResponse.result
+
+    // Return result
+    return result
+  }
+}
+
+// Expose
+module.exports = Client
+
+// Circular imports
+const arg = require('../util/arg')
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cache_cache.html">cache/cache</a></li><li><a href="module-chain_etherscan.html">chain/etherscan</a></li><li><a href="module-client_etherscan.html">client/etherscan</a></li><li><a href="module-client_etherscan-throttled.html">client/etherscan-throttled</a></li><li><a href="module-ethtaint.html">ethtaint</a></li><li><a href="module-net_request.html">net/request</a></li><li><a href="module-primitives_address.html">primitives/address</a></li><li><a href="module-primitives_amount.html">primitives/amount</a></li><li><a href="module-primitives_block.html">primitives/block</a></li><li><a href="module-primitives_taint.html">primitives/taint</a></li><li><a href="module-primitives_transaction.html">primitives/transaction</a></li><li><a href="module-util_arg.html">util/arg</a></li><li><a href="module-util_sleep.html">util/sleep</a></li><li><a href="module-util_useragent.html">util/useragent</a></li></ul><h3>Classes</h3><ul><li><a href="module-cache_cache.Cache.html">Cache</a></li><li><a href="module-chain_etherscan.ChainAgent.html">ChainAgent</a></li><li><a href="module-client_etherscan.Client.html">Client</a></li><li><a href="module-client_etherscan-throttled.Client.html">Client</a></li><li><a href="module-primitives_address.Address.html">Address</a></li><li><a href="module-primitives_amount.Amount.html">Amount</a></li><li><a href="module-primitives_block.Block.html">Block</a></li><li><a href="module-primitives_taint.Taint.html">Taint</a></li><li><a href="module-primitives_transaction.Transaction.html">Transaction</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Mon Aug 07 2017 03:07:07 GMT-0600 (Mountain Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

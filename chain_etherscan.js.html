@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: chain/etherscan.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: chain/etherscan.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Chain agent interfacing with Etherscan.
+ * @module chain/etherscan
+ */
+
+'use strict'
+
+// Imports
+const BigNumber = require('bignumber.js')
+const Client = require('../client/etherscan-throttled')
+const Block = require('../primitives/block')
+const Address = require('../primitives/address')
+const Amount = require('../primitives/amount')
+const Transaction = require('../primitives/transaction')
+
+// Resources
+var undef
+
+/**
+ * Private members store.
+ * @private
+ */
+const privs = new WeakMap()
+
+/**
+ * Map a client transaction to an ethtaint transaction.
+ * @private
+ * @param {module:client/etherscan~transaction} clientTx
+ *     Client transaction.
+   * @param {Object} cache - Set of caches.
+   * @param {module:cache/cache.Cache} cache.block
+   *     Block cache. Indexed by block number.
+   * @param {module:cache/cache.Cache} cache.address
+   *     Address cache. Indexed by address hex.
+   * @param {module:cache/cache.Cache} cache.tx
+   *     Transaction cache. Indexed by transaction hash.
+ * @return {module:primitives/transaction.Transaction}
+ *     Equivalent ethtaint transaction.
+ */
+async function mapTransaction (clientTx, cache) {
+  // Map block
+  const blockNumberString = clientTx.blockNumber
+  const blockNumber = parseInt(blockNumberString, 10)
+  let block = await cache.block.get(blockNumber)
+  if (block === undef) {
+    block = new Block(blockNumber)
+    await cache.block.set(blockNumber, block)
+  }
+
+  // Map source address
+  const fromHex = clientTx.from
+  let from = await cache.address.get(fromHex)
+  if (from === undef) {
+    from = new Address(fromHex)
+    await cache.address.set(fromHex, from)
+  }
+
+  // Map target address
+  const toHex = clientTx.to
+  let to
+  if (toHex === '') {
+    to = null
+  } else {
+    to = await cache.address.get(toHex)
+    if (to === undef) {
+      to = new Address(toHex)
+      await cache.address.set(toHex, to)
+    }
+  }
+
+  // Map transaction
+  const hash = clientTx.hash
+  let tx = await cache.tx.get(hash)
+  if (tx === undef) {
+    // Construct amount
+    const valueString = clientTx.value
+    const value = new BigNumber(valueString)
+    const amount = new Amount(value)
+
+    // Construct transaction
+    tx = new Transaction(
+      block,
+      hash,
+      from,
+      to,
+      amount
+    )
+
+    // Cache transaction
+    await cache.tx.set(hash, tx)
+  }
+
+  // Return transaction
+  return tx
+}
+
+/**
+ * Chain agent interfacing with Etherscan.
+ * @static
+ */
+class ChainAgent {
+  /**
+   * @param {Object} cache - Set of caches.
+   * @param {module:cache/cache.Cache} cache.block
+   *     Block cache. Indexed by block number.
+   * @param {module:cache/cache.Cache} cache.address
+   *     Address cache. Indexed by address hex.
+   * @param {module:cache/cache.Cache} cache.tx
+   *     Transaction cache. Indexed by transaction hash.
+   */
+  constructor (cache) {
+    const priv = {}
+    privs.set(this, priv)
+    priv.cache = cache
+    priv.client = new Client()
+  }
+
+  /**
+   * Get list of account transactions.
+   * @see {@link module:client/etherscan.Client#listAccountTransactions}
+   * @return {module:primitives/transaction.Transaction[]}
+   *     List of account transactions.
+   */
+  async listAccountTransactions () {
+    // Private members
+    const priv = privs.get(this)
+
+    // Get raw transactions
+    const rawTxs = await priv.client
+      .listAccountTransactions(...arguments)
+
+    // Map to Transaction objects
+    const txs = []
+    const cache = priv.cache
+    for (var i = 0; i &lt; rawTxs.length; i++) {
+      var rawTx = rawTxs[i]
+      var tx = await mapTransaction(rawTx, cache)
+      txs.push(tx)
+    }
+
+    // Return result
+    return txs
+  }
+}
+
+// Expose
+module.exports = ChainAgent
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-cache_cache.html">cache/cache</a></li><li><a href="module-chain_etherscan.html">chain/etherscan</a></li><li><a href="module-client_etherscan.html">client/etherscan</a></li><li><a href="module-client_etherscan-throttled.html">client/etherscan-throttled</a></li><li><a href="module-ethtaint.html">ethtaint</a></li><li><a href="module-net_request.html">net/request</a></li><li><a href="module-primitives_address.html">primitives/address</a></li><li><a href="module-primitives_amount.html">primitives/amount</a></li><li><a href="module-primitives_block.html">primitives/block</a></li><li><a href="module-primitives_taint.html">primitives/taint</a></li><li><a href="module-primitives_transaction.html">primitives/transaction</a></li><li><a href="module-util_arg.html">util/arg</a></li><li><a href="module-util_sleep.html">util/sleep</a></li><li><a href="module-util_useragent.html">util/useragent</a></li></ul><h3>Classes</h3><ul><li><a href="module-cache_cache.Cache.html">Cache</a></li><li><a href="module-chain_etherscan.ChainAgent.html">ChainAgent</a></li><li><a href="module-client_etherscan.Client.html">Client</a></li><li><a href="module-client_etherscan-throttled.Client.html">Client</a></li><li><a href="module-primitives_address.Address.html">Address</a></li><li><a href="module-primitives_amount.Amount.html">Amount</a></li><li><a href="module-primitives_block.Block.html">Block</a></li><li><a href="module-primitives_taint.Taint.html">Taint</a></li><li><a href="module-primitives_transaction.Transaction.html">Transaction</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Mon Aug 07 2017 03:07:07 GMT-0600 (Mountain Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

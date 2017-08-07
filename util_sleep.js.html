@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: primitives/address</title>
+    <title>JSDoc: Source: util/sleep.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,47 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: primitives/address</h1>
+    <h1 class="page-title">Source: util/sleep.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Asynchronous sleep.
+ * @module util/sleep
+ */
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">An Ethereum address.</div>
-        
+'use strict'
 
-        
-            
+/**
+ * Asynchronous sleep.
+ * @async
+ * @static
+ * @param {number} [time=0] - Time in milliseconds.
+ * @return {undefined} After specified time.
+ * @throws {Error} If time is not an integer.
+ */
+function sleep (time = 0) {
+  return new Promise(resolve => {
+    // Validate arguments
+    arg.integer(time)
 
+    setTimeout(resolve, time)
+  })
+}
 
+// Expose
+module.exports = sleep
 
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_address.js.html">primitives/address.js</a>, <a href="primitives_address.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-primitives_address.Address.html">Address</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+// Circular imports
+const arg = require('./arg')
+</code></pre>
+        </article>
+    </section>
 
 
 

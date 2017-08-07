@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: primitives/address</title>
+    <title>JSDoc: Source: net/useragent.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,51 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: primitives/address</h1>
+    <h1 class="page-title">Source: net/useragent.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file The ethtaint user agent string.
+ * @module util/useragent
+ */
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">An Ethereum address.</div>
-        
+'use strict'
 
-        
-            
+// Imports
+const version = require('project-version')
 
+/**
+ * Web address of project repository.
+ * @private
+ */
+const repositoryAddress =
+  'https://github.com/jestcrows/ethtaint'
 
+/**
+ * The ethtaint user agent string.
+ * @static
+ */
+let userAgent = 'ethtaint'
 
+// Add version
+if (version) {
+  userAgent += '/' + version
+}
 
+// Add repository address
+userAgent += ' (+' + repositoryAddress + ')'
 
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_address.js.html">primitives/address.js</a>, <a href="primitives_address.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-primitives_address.Address.html">Address</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+// Expose
+module.exports = userAgent
+</code></pre>
+        </article>
+    </section>
 
 
 

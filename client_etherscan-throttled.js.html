@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: primitives/address</title>
+    <title>JSDoc: Source: client/etherscan-throttled.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,137 +17,97 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: primitives/address</h1>
+    <h1 class="page-title">Source: client/etherscan-throttled.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file Throttled interface to Etherscan API client.
+ * @module client/etherscan-throttled
+ */
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">An Ethereum address.</div>
-        
+'use strict'
 
-        
-            
+// Imports
+const RawClient = require('./etherscan')
+const Bottleneck = require('bottleneck')
 
+/**
+ * Private members store.
+ * @private
+ */
+const privs = new WeakMap()
 
+/**
+ * Modules configuration.
+ * @private
+ */
+const moduleConfig = {
 
+  /**
+   * 5 requests started per second.
+   * 5 concurrent requests.
+   * Unlimited queue size.
+   */
+  bottleneck: {
+    maxConcurrent: 5,
+    minTime: 200,
+    highWater: -1,
+    strategy: Bottleneck.strategy.LEAK,
+    rejectOnDrop: true
+  }
+}
 
+/**
+ * Throttled interface to Etherscan API client.
+ * @static
+ */
+class Client {
+  /**
+   * No parameters.
+   */
+  constructor () {
+    const priv = {}
+    privs.set(this, priv)
+    priv.rawClient = new RawClient()
+    priv.rawMethod = {
+      listAccountTransactions: priv.rawClient
+        .listAccountTransactions.bind(priv.rawClient)
+    }
+    priv.limiter = new Bottleneck(
+      moduleConfig.bottleneck.maxConcurrent,
+      moduleConfig.bottleneck.minTime,
+      moduleConfig.bottleneck.highWater,
+      moduleConfig.bottleneck.strategy,
+      moduleConfig.bottleneck.rejectOnDrop
+    )
+  }
 
+  /**
+   * Get list of account transactions.
+   * @async
+   * @see {@link module:client/etherscan.Client#listAccountTransactions}
+   */
+  listAccountTransactions () {
+    const priv = privs.get(this)
+    const limiter = priv.limiter
+    return limiter.schedule(
+      priv.rawMethod.listAccountTransactions,
+      ...arguments
+    )
+  }
+}
 
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="primitives_address.js.html">primitives/address.js</a>, <a href="primitives_address.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Classes</h3>
-
-        <dl>
-            <dt><a href="module-primitives_address.Address.html">Address</a></dt>
-            <dd></dd>
-        </dl>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+// Expose
+module.exports = Client
+</code></pre>
+        </article>
+    </section>
 
 
 
