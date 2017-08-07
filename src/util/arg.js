@@ -74,7 +74,7 @@ exports.addressHex = function addressHex (arg) {
 
 /**
  * Confirm argument is transaction hash.
- * TODO: Validate transaction hash format.
+ * @todo Validate transaction hash format.
  * @param {string|*} arg - Argument.
  * @return {undefined}
  * @throws {Error} If arg is not a string literal.
