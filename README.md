@@ -2,6 +2,12 @@
 
 Taint tracking for Ethereum.
 
+Simple web interface:
+
+![](https://raw.githubusercontent.com/wiki/jestcrows/ethtaint/image/WebInterface.png)
+
+Command line interface:
+
 ```bash
 $ node bin/ethtaint.js 0xEF8C7C725AA425DEee9999a03701c75b2872963f
 
@@ -20,9 +26,14 @@ Tainted 10 / Traced 1 / Txs 3611
 
 ## Usage
 
+Install [NodeJS](https://nodejs.org/en/) version 8.2.1.  
+
 Clone the repository:  
 `git clone https://github.com/jestcrows/ethtaint.git`  
 `cd ethtaint`  
+
+Install node modules:  
+`npm install`  
 
 Provide your [Etherscan API key](https://etherscan.io/apis) in a new local configuration file `config/local.json`:  
 ```json
@@ -37,6 +48,8 @@ Start a trace:
 `node bin/etherscan.js 0xEF8C7C725AA425DEee9999a03701c75b2872963f`
 
 Status and results will output to the command line. A list of identified tainted addresses will be written to `trace/SOURCEADDRESS`. Tracing will continue until all existing chain data has been exhausted. A full trace can take a long time.
+
+To use the web interface start the web server with `node web/server.js`. Open the interface in your browser at `http://localhost:7403/`.
 
 ## Development
 
