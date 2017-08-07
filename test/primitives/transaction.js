@@ -59,9 +59,29 @@ test('from must be Address', t => {
 })
 
 /**
- * Cannot create without to address.
+ * Null to address allowed.
  */
-test('to must be Address', t => {
+test('to may be null', t => {
+  const block = new Block(testBlockNumber)
+  const hash = testTransactionHash
+  const from = new Address(testAddress)
+  const value = new BigNumber(testValue)
+  const amount = new Amount(value)
+  t.notThrows(() => {
+    new Transaction(
+      block,
+      hash,
+      from,
+      null,
+      amount
+    )
+  })
+})
+
+/**
+ * To address must be Address or null.
+ */
+test('to must be Address or null', t => {
   const block = new Block(testBlockNumber)
   const hash = testTransactionHash
   const from = new Address(testAddress)

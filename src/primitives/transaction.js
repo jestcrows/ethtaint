@@ -22,7 +22,7 @@ class Transaction {
    * @param {string} hash - Transaction hash.
    * @param {module:primitives/address.Address} from
    *     Source address.
-   * @param {module:primitives/address.Address} to
+   * @param {module:primitives/address.Address|null} to
    *     Target address.
    * @param {module:primitives/amount.Amount} amount
    *     Amount transferred.
@@ -38,7 +38,9 @@ class Transaction {
     arg.Block(block)
     arg.transactionHash(hash)
     arg.Address(from)
-    arg.Address(to)
+    if (to !== null) {
+      arg.Address(to)
+    }
     arg.Amount(amount)
 
     const priv = {}
@@ -83,7 +85,7 @@ class Transaction {
 
   /**
    * Target address.
-   * @type {module:primitives/address.Address}
+   * @type {module:primitives/address.Address|null}
    */
   get to () {
     const priv = privs.get(this)
