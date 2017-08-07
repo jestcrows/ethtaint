@@ -63,7 +63,7 @@ class Client {
   /**
    * Get list of account transactions.
    * @async
-   * @see module:client/etherscan#listAccountTransactions
+   * @see {@link module:client/etherscan.Client#listAccountTransactions}
    */
   listAccountTransactions () {
     const priv = privs.get(this)
