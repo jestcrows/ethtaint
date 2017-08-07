@@ -117,6 +117,14 @@ function processTransaction (
  */
 
 /**
+ * Traced tainted address.
+ * @event Tracker#tracedAddress
+ * @type {Array}
+ * @prop {module:primitives/address.Address} 0
+ *     Tainted address.
+ */
+
+/**
  * Ethereum taint tracker.
  * @static
  * @emits Tracker#taint
@@ -219,6 +227,12 @@ class Tracker extends EventEmitter {
         // Increment page number
         page++
       } while (numTxs === pageSize)
+
+      // Emit traced
+      this.emit(
+        'tracedAddress',
+        address
+      )
     }
   }
 }

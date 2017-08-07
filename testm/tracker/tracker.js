@@ -15,12 +15,17 @@ test('trace addresses', async t => {
   const sourceHex = testAddress
   const tainted = new Set()
   let numTxsProcessed = 0
+  let numAddressesTraced = 0
   tracker.on('page', (address, page) => {
     console.log('Getting ' + address.hex + ' page ' + page)
   })
   tracker.on('processedTransaction', (address, tx) => {
     numTxsProcessed++
     console.log('Processed ' + numTxsProcessed + ' txs')
+  })
+  tracker.on('tracedAddress', address => {
+    numAddressesTraced++
+    console.log('Traced ' + numAddressesTraced + ' addresses')
   })
   tracker.on('taint', (address, taint) => {
     tainted.add(address)
