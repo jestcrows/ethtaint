@@ -44,6 +44,7 @@ function log () {
 mkdirp.sync('trace')
 const fileName = 'trace/' + sourceHex
 async function traceAddresses (sourceHex) {
+  log()
   log('Tracing taint from: ' + sourceHex)
   update()
   fs.writeFileSync(fileName, sourceHex + '\n')
