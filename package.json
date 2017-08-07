@@ -18,6 +18,7 @@
     "config": "^1.26.1",
     "ethereum-address": "0.0.4",
     "log-update": "^2.1.0",
+    "mkdirp": "^0.5.1",
     "project-version": "^1.0.0",
     "request": "^2.81.0",
     "request-promise-native": "^1.0.4"
