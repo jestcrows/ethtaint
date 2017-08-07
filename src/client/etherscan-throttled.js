@@ -22,12 +22,13 @@ const privs = new WeakMap()
 const moduleConfig = {
 
   /**
-   * 5 requests per second.
+   * 5 requests started per second.
+   * 5 concurrent requests.
    * Unlimited queue size.
    */
   bottleneck: {
     maxConcurrent: 5,
-    minTime: 1000,
+    minTime: 200,
     highWater: -1,
     strategy: Bottleneck.strategy.LEAK,
     rejectOnDrop: true
@@ -46,12 +47,30 @@ class Client {
     const priv = {}
     privs.set(this, priv)
     priv.rawClient = new RawClient()
+    priv.rawMethod = {
+      listAccountTransactions: priv.rawClient
+        .listAccountTransactions.bind(priv.rawClient)
+    }
     priv.limiter = new Bottleneck(
       moduleConfig.bottleneck.maxConcurrent,
       moduleConfig.bottleneck.minTime,
       moduleConfig.bottleneck.highWater,
       moduleConfig.bottleneck.strategy,
       moduleConfig.bottleneck.rejectOnDrop
+    )
+  }
+
+  /**
+   * Get list of account transactions.
+   * @async
+   * @see module:client/etherscan#listAccountTransactions
+   */
+  listAccountTransactions () {
+    const priv = privs.get(this)
+    const limiter = priv.limiter
+    return limiter.schedule(
+      priv.rawMethod.listAccountTransactions,
+      ...arguments
     )
   }
 }
