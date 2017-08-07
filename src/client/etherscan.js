@@ -8,6 +8,14 @@
 // Imports
 const { URL } = require('url')
 const config = require('config')
+const requestGlobal = require('request-promise-native')
+
+// Configure request
+const request = requestGlobal.defaults({
+  headers: {
+    'User-Agent': 'ethtaint'
+  }
+})
 
 /**
  * Private members store.
@@ -49,6 +57,28 @@ class Client {
     const priv = {}
     privs.set(this, priv)
     priv.apiKey = config.get('Etherscan.apiKey')
+  }
+
+  /**
+   * Get list of account transactions.
+   * @param {string} address - Account address.
+   * @return {object[]} List of account transactions.
+   */
+  async listAccountTransactions (address) {
+    // Construct request address
+    const requestUrl = new URL(url.account.listTransactions)
+    requestUrl.searchParams.set('address', address)
+    const requestAddress = requestUrl.toString()
+
+    // Acquire RPC response
+    const rpcResponseJson = await request.get(requestAddress)
+    const rpcResponse = JSON.parse(rpcResponseJson)
+
+    // Extract result
+    const result = rpcResponse.result
+
+    // Return result
+    return result
   }
 }
 
