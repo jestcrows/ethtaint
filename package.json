@@ -2,6 +2,7 @@
   "name": "ethtaint",
   "version": "0.5.0",
   "license": "Unlicense",
+  "main": "src/main",
   "scripts": {
     "test": "ava",
     "doc": "jsdoc -c jsdoc.conf.json -P package.json -d jsdoc -r --pedantic"

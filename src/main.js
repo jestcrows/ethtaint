@@ -4,3 +4,9 @@
  */
 
 'use strict'
+
+// Imports
+const Tracker = require('./tracker/tracker')
+
+// Expose
+exports.Tracker = Tracker
