@@ -6,18 +6,10 @@
 'use strict'
 
 // Imports
-const version = require('project-version')
+const userAgent = require('../util/useragent')
 const { URL } = require('url')
 const config = require('config')
 const requestGlobal = require('request-promise-native')
-
-// Construct user agent string
-let userAgent = 'ethtaint'
-if (version) {
-  userAgent += '/' + version.toString()
-}
-
-console.log(userAgent)
 
 // Configure request
 const request = requestGlobal.defaults({
