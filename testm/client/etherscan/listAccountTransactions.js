@@ -19,10 +19,10 @@ test.beforeEach('rate limit', async t => {
 })
 
 /**
- * Valid address.
+ * Valid used address.
  */
-test.serial('valid address', async t => {
-  console.log('Acquire with valid address')
+test.serial('valid used address', async t => {
+  console.log('Acquire with valid used address')
   const client = new Client()
   const prom = client
     .listAccountTransactions(testAddress)
@@ -30,6 +30,7 @@ test.serial('valid address', async t => {
   const txs = await prom
   const numTxs = txs.length
   console.log('Found ' + numTxs + ' txs')
+  t.true(numTxs !== 0)
 })
 
 /**
