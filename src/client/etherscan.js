@@ -140,6 +140,9 @@ class Client {
       arg.integer(pageSize)
     }
 
+    // Private members
+    const priv = privs.get(this)
+
     // Construct request address
     const requestUrl = new URL(url.account.listTransactions)
     requestUrl.searchParams.set('address', address)
@@ -154,6 +157,9 @@ class Client {
     }
     if (pageSize !== null) {
       requestUrl.searchParams.set('offset', pageSize)
+    }
+    if (priv.apiKey !== null) {
+      requestUrl.searchParams.set('apikey', priv.apiKey)
     }
     const requestAddress = requestUrl.toString()
 
