@@ -144,6 +144,20 @@ class Tracker extends EventEmitter {
     }
     priv.chain = new ChainAgent(priv.cache)
     priv.pageSize = 50
+    priv.tracing = false
+    priv.canceling = false
+  }
+
+  /**
+   * Request cancelation of a trace.
+   * @return {undefined}
+   */
+  async cancelTrace () {
+    const priv = privs.get(this)
+    let res
+    const prom = new Promise(resolve => { res = resolve })
+    priv.canceling = res
+    return prom
   }
 
   /**
@@ -169,6 +183,10 @@ class Tracker extends EventEmitter {
     const cache = priv.cache
     const chain = priv.chain
     const pageSize = priv.pageSize
+    if (priv.tracing) {
+      throw new Error('Already tracing')
+    }
+    priv.tracing = true
 
     // Get address
     let source = await cache.address.get(sourceHex)
@@ -193,10 +211,26 @@ class Tracker extends EventEmitter {
       traced.add(address),
       address = getTaintedUntraced(tainted, traced)
     ) {
+      // Detect canceling
+      if (priv.canceling) {
+        priv.tracing = false
+        priv.canceling()
+        priv.canceling = false
+        return
+      }
+
       // Get address transactions
       let txs, numTxs, tx
       let page = 1
       do {
+        // Detect canceling
+        if (priv.canceling) {
+          priv.tracing = false
+          priv.canceling()
+          priv.canceling = false
+          return
+        }
+
         // Get next page of transactions
         this.emit(
           'page',
@@ -212,6 +246,14 @@ class Tracker extends EventEmitter {
 
         // Process transactions
         for (var i = 0; i < numTxs; i++) {
+          // Detect canceling
+          if (priv.canceling) {
+            priv.tracing = false
+            priv.canceling()
+            priv.canceling = false
+            return
+          }
+
           tx = txs[i]
           await processTransaction(
             this,
@@ -237,6 +279,10 @@ class Tracker extends EventEmitter {
         address
       )
     }
+
+    // End tracing
+    priv.tracing = false
+    priv.canceling = false
   }
 }
 
