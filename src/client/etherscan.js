@@ -6,7 +6,7 @@
 'use strict'
 
 // Imports
-const userAgent = require('../util/useragent')
+const userAgent = require('../net/useragent')
 const { URL } = require('url')
 const config = require('config')
 const requestGlobal = require('request-promise-native')
