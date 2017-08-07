@@ -1,6 +1,7 @@
 {
   "name": "ethtaint",
   "version": "0.5.0",
+  "description": "Taint tracking for Ethereum",
   "license": "Unlicense",
   "main": "src/main",
   "scripts": {
