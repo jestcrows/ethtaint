@@ -38,9 +38,5 @@ test.serial('bad address', async t => {
   const client = new Client()
   const prom = client
     .listAccountTransactions('test')
-  await t.notThrows(prom)
-  const txs = await prom
-  const numTxs = txs.length
-  console.log('Found ' + numTxs + ' txs')
-  t.true(numTxs === 0)
+  await t.throws(prom)
 })

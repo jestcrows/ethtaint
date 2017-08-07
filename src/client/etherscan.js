@@ -65,6 +65,9 @@ class Client {
    * @return {object[]} List of account transactions.
    */
   async listAccountTransactions (address) {
+    // Validate arguments
+    arg.addressHex(address)
+
     // Construct request address
     const requestUrl = new URL(url.account.listTransactions)
     requestUrl.searchParams.set('address', address)
@@ -84,3 +87,6 @@ class Client {
 
 // Expose
 module.exports = Client
+
+// Circular imports
+const arg = require('../util/arg')
