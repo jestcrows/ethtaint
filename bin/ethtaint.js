@@ -5,6 +5,7 @@
 // Imports
 const version = require('project-version')
 const program = require('commander')
+const logUpdate = require('log-update')
 const ethtaint = require('..')
 
 // Configure interface
@@ -21,17 +22,44 @@ if (!addressHex) {
   program.help()
 }
 
+// Output machinery
+let tainted = 1
+let traced = 0
+let txs = 0
+function update () {
+  let s = 'Tainted ' + tainted
+  s += ' / Traced ' + traced
+  s += ' / Txs ' + txs
+  logUpdate(s)
+}
+function log () {
+  logUpdate.clear()
+  console.log(...arguments)
+  update()
+}
+
 // Trace taint from specified address
 async function traceAddresses (addressHex) {
-  console.log('Tracing taint from: ' + addressHex)
+  log('Tracing taint from: ' + addressHex)
+  update()
   const tracker = new ethtaint.Tracker()
   try {
     tracker.on('taint', address => {
-      console.log('Tainted ' + address.hex)
+      tainted++
+      log(address.hex)
+    })
+    tracker.on('tracedAddress', address => {
+      traced++
+      update()
+    })
+    tracker.on('processedTransaction', () => {
+      txs++
+      update()
     })
     await tracker.traceAddresses(addressHex)
+    logUpdate.done()
   } catch (e) {
-    console.log(e.toString())
+    log(e.toString())
   }
 }
 traceAddresses(addressHex)
