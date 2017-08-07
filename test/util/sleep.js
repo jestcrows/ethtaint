@@ -21,3 +21,19 @@ test('sleep default time', async t => {
     await sleep()
   })
 })
+
+/**
+ * Time must be number.
+ */
+test('time must be number', async t => {
+  const prom = sleep('test')
+  await t.throws(prom)
+})
+
+/**
+ * Time must be integer.
+ */
+test('time must be integer', async t => {
+  const prom = sleep(7.4)
+  await t.throws(prom)
+})
