@@ -7,8 +7,8 @@ import Client from '../../../src/client/etherscan'
 
 // Test data
 const testAddress = '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae'
-const testUnusedAddress
-  = '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
+const testUnusedAddress =
+  '0xe148E5AA46401b7bEe89D1F6103776ba508024e0'
 
 // Sleep before each test
 test.beforeEach('rate limit', async t => {
