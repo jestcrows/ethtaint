@@ -5,6 +5,9 @@
 
 'use strict'
 
+// Imports
+const Cache = require('../cache/cache')
+
 /**
  * Private members store.
  * @private
@@ -22,6 +25,11 @@ class Tracker {
   constructor () {
     const priv = {}
     privs.set(this, priv)
+    priv.cache = {
+      block: new Cache(),
+      address: new Cache(),
+      tx: new Cache()
+    }
   }
 }
 
