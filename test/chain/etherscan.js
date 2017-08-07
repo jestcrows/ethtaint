@@ -2,7 +2,7 @@
 import test from 'ava'
 
 // Imports
-import ChainAgent from '../../src/chain/etherscan.js'
+import ChainAgent from '../../src/chain/etherscan'
 
 /**
  * Create a new Etherscan chain agent.
