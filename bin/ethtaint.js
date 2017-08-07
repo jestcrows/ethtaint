@@ -17,8 +17,8 @@ program
   .parse(process.argv)
 
 // Extract address argument
-const addressHex = program.args[0]
-if (!addressHex) {
+const sourceHex = program.args[0]
+if (!sourceHex) {
   program.help()
 }
 
@@ -39,8 +39,8 @@ function log () {
 }
 
 // Trace taint from specified address
-async function traceAddresses (addressHex) {
-  log('Tracing taint from: ' + addressHex)
+async function traceAddresses (sourceHex) {
+  log('Tracing taint from: ' + sourceHex)
   update()
   const tracker = new ethtaint.Tracker()
   try {
@@ -56,10 +56,10 @@ async function traceAddresses (addressHex) {
       txs++
       update()
     })
-    await tracker.traceAddresses(addressHex)
+    await tracker.traceAddresses(sourceHex)
     logUpdate.done()
   } catch (e) {
     log(e.toString())
   }
 }
-traceAddresses(addressHex)
+traceAddresses(sourceHex)
