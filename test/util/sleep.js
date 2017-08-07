@@ -8,18 +8,16 @@ import sleep from '../../src/util/sleep'
  * Sleep 10 milliseconds.
  */
 test('sleep 10 milliseconds', async t => {
-  await t.notThrows(async () => {
-    await sleep(10)
-  })
+  const prom = sleep(10)
+  await t.notThrows(prom)
 })
 
 /**
  * Sleep default time.
  */
 test('sleep default time', async t => {
-  await t.notThrows(async () => {
-    await sleep()
-  })
+  const prom = sleep()
+  await t.notThrows(prom)
 })
 
 /**
