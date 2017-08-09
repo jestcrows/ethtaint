@@ -66,8 +66,6 @@
     // Click Stop
     stopEl.onclick = function stopTrace () {
       socket.emit('stop')
-      tracing = false
-      stopped()
     }
 
     // Found tainted address
