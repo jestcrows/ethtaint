@@ -14,14 +14,25 @@ const ethtaint = require('..')
 program
   .version(version)
   .description('Taint tracking for Ethereum.')
-  .arguments('<address>')
-  .usage('<address>')
+  .arguments('<address> [startBlock]')
+  .usage('<address> [startBlock]')
   .parse(process.argv)
 
 // Extract address argument
 const sourceHex = program.args[0]
 if (!sourceHex) {
   program.help()
+}
+
+// Extract start block argument
+const startBlockString = program.args[1]
+let startBlock
+if (startBlockString) {
+  startBlock = Number.parseInt(startBlockString)
+  if (Number.isNaN(startBlock)) {
+    console.log('Start block number be an integer')
+    program.help()
+  }
 }
 
 // Output machinery
@@ -43,9 +54,13 @@ function log () {
 // Trace taint from specified address
 mkdirp.sync('trace')
 const fileName = 'trace/' + sourceHex
-async function traceAddresses (sourceHex) {
+async function traceAddresses (sourceHex, startBlock) {
   log()
-  log('Tracing taint from: ' + sourceHex)
+  let msg = 'Tracing taint from: ' + sourceHex
+  if (startBlock) {
+    msg += ' ' + startBlock
+  }
+  log(msg)
   update()
   fs.writeFileSync(fileName, sourceHex + '\n')
   const tracker = new ethtaint.Tracker()
@@ -63,10 +78,10 @@ async function traceAddresses (sourceHex) {
       txs++
       update()
     })
-    await tracker.traceAddresses(sourceHex)
+    await tracker.traceAddresses(sourceHex, startBlock)
     logUpdate.done()
   } catch (e) {
     log(e.toString())
   }
 }
-traceAddresses(sourceHex)
+traceAddresses(sourceHex, startBlock)
