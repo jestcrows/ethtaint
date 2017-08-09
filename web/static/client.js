@@ -93,6 +93,12 @@
       txsEl.innerText = txs.toString()
     })
 
+    // Trace complete
+    socket.on('done', () => {
+      tracing = false
+      stopped()
+    })
+
     // Trace error
     socket.on('fail', message => {
       console.log('Trace error: ' + message)
