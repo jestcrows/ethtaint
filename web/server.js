@@ -43,6 +43,7 @@ async function traceAddresses (sourceHex) {
     tracing = false
     socket.emit('done')
   } catch (e) {
+    tracing = false
     socket.emit('fail', e.toString())
   }
 }
