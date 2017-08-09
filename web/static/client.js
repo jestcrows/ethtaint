@@ -48,6 +48,9 @@
     traceEl.onclick = function startTrace () {
       tracing = true
       started()
+      tainted = 1
+      traced = 0
+      txs = 0
       taintedEl.innerText = '1'
       tracedEl.innerText = ''
       txsEl.innerText = ''
