@@ -96,6 +96,7 @@
 
     // Trace complete
     socket.on('done', () => {
+      console.log('Trace complete')
       tracing = false
       stopped()
     })
