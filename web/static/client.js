@@ -27,6 +27,7 @@
     const txsEl = document.getElementById('Txs')
     const listEl = document.getElementById('TaintedList')
     const sourceEl = document.getElementById('Source')
+    const startBlockEl = document.getElementById('StartBlock')
     const traceEl = document.getElementById('Trace')
     const stopEl = document.getElementById('Stop')
 
@@ -57,10 +58,17 @@
       $(listEl).empty()
       const sourceHex = sourceEl.value
       const sourceHexLower = sourceHex.toLowerCase()
+      const startBlockString = startBlockEl.value
+      let startBlock
+      try {
+        startBlock = Number.parseInt(startBlockString, 10)
+      } catch (e) {
+        startBlock = 0
+      }
       $('<div class="tainted" id="' + sourceHexLower + '">' +
         sourceHexLower + '</div>')
         .appendTo(listEl)
-      socket.emit('trace', sourceHex)
+      socket.emit('trace', sourceHex, startBlock)
     }
 
     // Click Stop

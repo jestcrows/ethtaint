@@ -36,10 +36,10 @@ tracker.on('processedTransaction', () => {
 let tracing = false
 
 // Start trace
-async function traceAddresses (sourceHex) {
-  socket.emit('msg', 'Tracing taint from: ' + sourceHex)
+async function traceAddresses (sourceHex, startBlock) {
+  socket.emit('msg', 'Tracing taint from: ' + sourceHex + ' ' + startBlock)
   try {
-    await tracker.traceAddresses(sourceHex)
+    await tracker.traceAddresses(sourceHex, startBlock)
     tracing = false
     socket.emit('done')
   } catch (e) {
@@ -59,12 +59,12 @@ io.on('connection', sock => {
   console.log('Received IO connection')
   socket = sock
 
-  socket.on('trace', sourceHex => {
+  socket.on('trace', (sourceHex, startBlock) => {
     if (tracing) {
       cancelTrace()
     }
     tracing = true
-    traceAddresses(sourceHex)
+    traceAddresses(sourceHex, startBlock)
   })
 
   socket.on('stop', () => {

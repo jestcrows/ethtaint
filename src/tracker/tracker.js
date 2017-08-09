@@ -171,9 +171,11 @@ class Tracker extends EventEmitter {
    * @todo Detect and use extant taint with same source.
    * @param {string} sourceHex
    *     Source address of taint. As an address hex.
+   * @param {number} [startBlock=0]
+   *     Start block of taint.
    * @return {undefined}
    */
-  async traceAddresses (sourceHex) {
+  async traceAddresses (sourceHex, startBlock = 0) {
     // Validate arguments
     arg.addressHex(sourceHex)
 
@@ -207,7 +209,7 @@ class Tracker extends EventEmitter {
       const tainted = new Set()
       tainted.add(source)
       const taintedFrom = new Map()
-      taintedFrom.set(source, 0)
+      taintedFrom.set(source, startBlock)
       const traced = new Set()
 
       // Trace
