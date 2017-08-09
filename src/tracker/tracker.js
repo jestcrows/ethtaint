@@ -188,41 +188,31 @@ class Tracker extends EventEmitter {
     }
     priv.tracing = true
 
-    // Get address
-    let source = await cache.address.get(sourceHex)
-    if (source === undef) {
-      source = new Address(sourceHex)
-      await cache.address.set(sourceHex, source)
-    }
-
-    // Create taint
-    const taint = new Taint(source)
-    source.addTaint(taint)
-
-    // Working data
-    const tainted = new Set()
-    tainted.add(source)
-    const traced = new Set()
-
-    // Trace
-    for (
-      let address = getTaintedUntraced(tainted, traced);
-      address !== null;
-      traced.add(address),
-      address = getTaintedUntraced(tainted, traced)
-    ) {
-      // Detect canceling
-      if (priv.canceling) {
-        priv.tracing = false
-        priv.canceling()
-        priv.canceling = false
-        return
+    // Watch for trace failure
+    try {
+      // Get address
+      let source = await cache.address.get(sourceHex)
+      if (source === undef) {
+        source = new Address(sourceHex)
+        await cache.address.set(sourceHex, source)
       }
 
-      // Get address transactions
-      let txs, numTxs, tx
-      let page = 1
-      do {
+      // Create taint
+      const taint = new Taint(source)
+      source.addTaint(taint)
+
+      // Working data
+      const tainted = new Set()
+      tainted.add(source)
+      const traced = new Set()
+
+      // Trace
+      for (
+        let address = getTaintedUntraced(tainted, traced);
+        address !== null;
+        traced.add(address),
+        address = getTaintedUntraced(tainted, traced)
+      ) {
         // Detect canceling
         if (priv.canceling) {
           priv.tracing = false
@@ -231,21 +221,10 @@ class Tracker extends EventEmitter {
           return
         }
 
-        // Get next page of transactions
-        this.emit(
-          'page',
-          address,
-          page
-        )
-        txs = await chain
-          .listAccountTransactions(address.hex, {
-            page,
-            pageSize
-          })
-        numTxs = txs.length
-
-        // Process transactions
-        for (var i = 0; i < numTxs; i++) {
+        // Get address transactions
+        let txs, numTxs, tx
+        let page = 1
+        do {
           // Detect canceling
           if (priv.canceling) {
             priv.tracing = false
@@ -254,35 +233,62 @@ class Tracker extends EventEmitter {
             return
           }
 
-          tx = txs[i]
-          await processTransaction(
-            this,
-            taint,
-            address,
-            tx,
-            tainted
-          )
+          // Get next page of transactions
           this.emit(
-            'processedTransaction',
+            'page',
             address,
-            tx
+            page
           )
-        }
+          txs = await chain
+            .listAccountTransactions(address.hex, {
+              page,
+              pageSize
+            })
+          numTxs = txs.length
 
-        // Increment page number
-        page++
-      } while (numTxs === pageSize)
+          // Process transactions
+          for (var i = 0; i < numTxs; i++) {
+            // Detect canceling
+            if (priv.canceling) {
+              priv.tracing = false
+              priv.canceling()
+              priv.canceling = false
+              return
+            }
 
-      // Emit traced
-      this.emit(
-        'tracedAddress',
-        address
-      )
+            tx = txs[i]
+            await processTransaction(
+              this,
+              taint,
+              address,
+              tx,
+              tainted
+            )
+            this.emit(
+              'processedTransaction',
+              address,
+              tx
+            )
+          }
+
+          // Increment page number
+          page++
+        } while (numTxs === pageSize)
+
+        // Emit traced
+        this.emit(
+          'tracedAddress',
+          address
+        )
+      }
+
+      // End tracing
+      priv.tracing = false
+      priv.canceling = false
+    } catch (e) {
+      priv.tracing = false
+      throw e
     }
-
-    // End tracing
-    priv.tracing = false
-    priv.canceling = false
   }
 }
 
