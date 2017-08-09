@@ -46,7 +46,8 @@ function processTransaction (
   taint,
   source,
   tx,
-  tainted
+  tainted,
+  taintedFrom
 ) {
   // No target
   if (tx.to === null) {
@@ -73,6 +74,7 @@ function processTransaction (
 
   // Add to tainted list
   tainted.add(tx.to)
+  taintedFrom.set(tx.to, tx.block.number)
 
   // Already tainted
   if (tx.to.hasTaint(taint)) {
@@ -204,11 +206,14 @@ class Tracker extends EventEmitter {
       // Working data
       const tainted = new Set()
       tainted.add(source)
+      const taintedFrom = new Map()
+      taintedFrom.set(source, 0)
       const traced = new Set()
 
       // Trace
       for (
-        let address = getTaintedUntraced(tainted, traced);
+        let address = getTaintedUntraced(tainted, traced),
+          fromBlockNumber;
         address !== null;
         traced.add(address),
         address = getTaintedUntraced(tainted, traced)
@@ -233,6 +238,9 @@ class Tracker extends EventEmitter {
             return
           }
 
+          // Get tainted from block number
+          fromBlockNumber = taintedFrom.get(address)
+
           // Get next page of transactions
           this.emit(
             'page',
@@ -241,6 +249,7 @@ class Tracker extends EventEmitter {
           )
           txs = await chain
             .listAccountTransactions(address.hex, {
+              startBlock: fromBlockNumber,
               page,
               pageSize
             })
@@ -262,7 +271,8 @@ class Tracker extends EventEmitter {
               taint,
               address,
               tx,
-              tainted
+              tainted,
+              taintedFrom
             )
             this.emit(
               'processedTransaction',
