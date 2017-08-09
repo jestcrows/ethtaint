@@ -80,7 +80,7 @@
     socket.on('tracedAddress', address => {
       traced++
       tracedEl.innerText = traced.toString()
-      console.log('Traced '+address)
+      console.log('Traced ' + address)
       const item = document.getElementById(address)
       if (item) {
         item.className = 'traced'
