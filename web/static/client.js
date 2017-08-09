@@ -104,6 +104,7 @@
     // Trace error
     socket.on('fail', message => {
       console.log('Trace error: ' + message)
+      tracing = false
       stopped()
     })
   })
