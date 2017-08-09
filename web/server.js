@@ -40,6 +40,7 @@ async function traceAddresses (sourceHex) {
   socket.emit('msg', 'Tracing taint from: ' + sourceHex)
   try {
     await tracker.traceAddresses(sourceHex)
+    tracing = false
     socket.emit('done')
   } catch (e) {
     socket.emit('fail', e.toString())
