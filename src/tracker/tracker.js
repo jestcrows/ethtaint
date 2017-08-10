@@ -6,6 +6,8 @@
 'use strict'
 
 // Imports
+const fs = require('fs')
+const mkdirp = require('mkdirp')
 const EventEmitter = require('events')
 const Cache = require('../cache/cache')
 const ChainAgent = require('../chain/etherscan')
@@ -39,12 +41,230 @@ function getTaintedUntraced (tainted, traced) {
 }
 
 /**
+ * Check whether save exists.
+ * @param {string} sourceHex - Hex representation of taint source address.
+ * @param {number} startBlock - Start block of tainting.
+ * @return {boolean} Whether save exists.
+ */
+async function saveExists (sourceHex, startBlock) {
+  return new Promise((resolve, reject) => {
+    const dirPath = 'trace/' + sourceHex + '-' + startBlock
+    fs.access(dirPath, err => {
+      if (err) {
+        resolve(false)
+      } else {
+        resolve(true)
+      }
+    })
+  })
+}
+
+/**
+ * Create directory and all parent directories.
+ * @param {string} dirPath - Path to directory.
+ * @return {undefined}
+ */
+async function createDirectory (dirPath) {
+  return new Promise((resolve, reject) => {
+    mkdirp(dirPath, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Initialize file.
+ * @param {string} filePath - Path to file.
+ * @param {string} data - Initial data.
+ * @return {undefined}
+ */
+async function initializeFile (filePath, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, data, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Open file.
+ * @param {string} filePath - Path to file.
+ * @param {string} mode - File mode.
+ * @return File descriptor.
+ */
+async function openFile (filePath, mode) {
+  return new Promise((resolve, reject) => {
+    fs.open(filePath, mode, (err, fd) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(fd)
+      }
+    })
+  })
+}
+
+/**
+ * Close file.
+ * @param fd - File descriptor.
+ * @return {undefined}
+ */
+async function closeFile (fd) {
+  return new Promise((resolve, reject) => {
+    fs.close(fd, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Create empty file.
+ * @param {string} filePath - Path to file.
+ * @return {undefined}
+ */
+async function createEmptyFile (filePath) {
+  const fd = await openFile(filePath, 'wx')
+  await closeFile(fd)
+}
+
+/**
+ * Read file.
+ * @param {string} filePath - Path to file.
+ * @return {string} File data.
+ */
+async function readFile (filePath) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
+/**
+ * Write file.
+ * @param {string} filePath - Path to file.
+ * @param {string} data - File data.
+ * @return {undefined}
+ */
+async function writeFile (filePath, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(filePath, data, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Initialize save.
+ * @param {string} sourceHex - Hex representation of taint source address.
+ * @param {number} startBlock - Start block of tainting.
+ * @return {undefined}
+ */
+async function initializeSave (sourceHex, startBlock) {
+  const dirPath = 'trace/' + sourceHex + '-' + startBlock
+  await createDirectory(dirPath)
+  const taintedFilePath = dirPath + '/tainted'
+  const taintedFileData = sourceHex + '|' + startBlock + '\n'
+  await initializeFile(taintedFilePath, taintedFileData)
+  const tracedFilePath = dirPath + '/traced'
+  await createEmptyFile(tracedFilePath)
+}
+
+/**
+ * Record address tainted.
+ * @param {string} sourceHex - Hex representation of source address.
+ * @param {number} sourceStartBlock - Start block of source tainting.
+ * @param {string} addressHex - Hex representation of tainted address.
+ * @param {number} startBlock - Start block of tainting.
+ * @return {undefined}
+ */
+async function recordTainted (sourceHex, sourceStartBlock, addressHex, startBlock) {
+  await new Promise((resolve, reject) => {
+    const filePath = 'trace/' + sourceHex + '-' + sourceStartBlock + '/tainted'
+    const data = addressHex + '|' + startBlock + '\n'
+    fs.appendFile(filePath, data, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Record address traced.
+ * @param {string} sourceHex - Hex representation of source address.
+ * @param {number} startBlock - Start block of tainting.
+ * @param {string} addressHex - Hex representation of traced address.
+ * @return {undefined}
+ */
+async function recordTraced (sourceHex, startBlock, addressHex) {
+  await new Promise((resolve, reject) => {
+    const filePath = 'trace/' + sourceHex + '-' + startBlock + '/traced'
+    const data = addressHex + '\n'
+    fs.appendFile(filePath, data, err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+/**
+ * Delete address traced.
+ * @todo Improve efficiency of this procedure.
+ * @param {string} sourceHex - Hex representation of source address.
+ * @param {number} startBlock - Start block of tainting.
+ * @param {string} addressHex - Hex representation of address needing new tracing.
+ * @return {undefined}
+ */
+async function deleteTraced (sourceHex, startBlock, addressHex) {
+  const filePath = 'trace/' + sourceHex + '-' + startBlock + '/traced'
+  const fileData = await readFile(filePath)
+  const fileLines = fileData.split('\n')
+  const newLines = []
+  for (let i = 0, line; i < fileLines.length; i++) {
+    line = fileLines[i]
+    if (line !== addressHex) {
+      newLines.append(line)
+    }
+  }
+  const newData = newLines.join('\n')
+  await writeFile(filePath, newData)
+}
+
+/**
  * Process a transaction.
  */
-function processTransaction (
+async function processTransaction (
   tracker,
   taint,
   source,
+  sourceStartBlock,
+  address,
   tx,
   tainted,
   taintedFrom,
@@ -56,7 +276,7 @@ function processTransaction (
   }
 
   // Input
-  if (tx.to === source) {
+  if (tx.to === address) {
     return
   }
 
@@ -81,6 +301,7 @@ function processTransaction (
     if (taintedFrom.get(tx.to) > tx.block.number) {
       taintedFrom.set(tx.to, tx.block.number)
       traced.delete(tx.to)
+      await deleteTraced(source.hex, sourceStartBlock, tx.to.hex)
       tracker.emit('reopenTrace', tx.to, taint)
     }
     return
@@ -89,6 +310,7 @@ function processTransaction (
   // Record tainted
   tx.to.addTaint(taint)
   taintedFrom.set(tx.ot, tx.block.number)
+  await recordTainted(source.hex, sourceStartBlock, tx.to.hex, tx.block.number)
 
   // Emit tainted
   tracker.emit('taint', tx.to, taint)
@@ -218,6 +440,13 @@ class Tracker extends EventEmitter {
       taintedFrom.set(source, startBlock)
       const traced = new Set()
 
+      // Trace saving
+      if (await saveExists(sourceHex, startBlock)) {
+        throw new Error('Trace resuming not yet implemented')
+      } else {
+        await initializeSave(sourceHex, startBlock)
+      }
+
       // Trace
       for (
         let address = getTaintedUntraced(tainted, traced),
@@ -277,6 +506,8 @@ class Tracker extends EventEmitter {
             await processTransaction(
               this,
               taint,
+              source,
+              startBlock,
               address,
               tx,
               tainted,
@@ -299,6 +530,9 @@ class Tracker extends EventEmitter {
           'tracedAddress',
           address
         )
+
+        // Record traced
+        await recordTraced(sourceHex, startBlock, address.hex)
       }
 
       // End tracing
