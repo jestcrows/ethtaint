@@ -47,7 +47,8 @@ function processTransaction (
   source,
   tx,
   tainted,
-  taintedFrom
+  taintedFrom,
+  traced
 ) {
   // No target
   if (tx.to === null) {
@@ -74,15 +75,20 @@ function processTransaction (
 
   // Add to tainted list
   tainted.add(tx.to)
-  taintedFrom.set(tx.to, tx.block.number)
 
   // Already tainted
   if (tx.to.hasTaint(taint)) {
+    if (taintedFrom.get(tx.to) > tx.block.number) {
+      taintedFrom.set(tx.to, tx.block.number)
+      traced.delete(tx.to)
+      tracker.emit('reopenTrace', tx.to, taint)
+    }
     return
   }
 
   // Record tainted
   tx.to.addTaint(taint)
+  taintedFrom.set(tx.ot, tx.block.number)
 
   // Emit tainted
   tracker.emit('taint', tx.to, taint)
@@ -274,7 +280,8 @@ class Tracker extends EventEmitter {
               address,
               tx,
               tainted,
-              taintedFrom
+              taintedFrom,
+              traced
             )
             this.emit(
               'processedTransaction',

@@ -96,6 +96,17 @@
       }
     })
 
+    // Reopen trace
+    socket.on('reopenTrace', address => {
+      traced--
+      tracedEl.innerText = traced.toString()
+      console.log('Reopened trace ' + address)
+      const item = document.getElementById(address)
+      if (item) {
+        item.className = 'tainted'
+      }
+    })
+
     // Processed transaction
     socket.on('processedTransaction', () => {
       txs++

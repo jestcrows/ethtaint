@@ -30,6 +30,9 @@ tracker.on('taint', address => {
 tracker.on('tracedAddress', address => {
   socket.emit('tracedAddress', address.hex)
 })
+tracker.on('reopenTrace', address => {
+  socket.emit('reopenTrace', address.hex)
+})
 tracker.on('processedTransaction', () => {
   socket.emit('processedTransaction')
 })
