@@ -4,7 +4,7 @@ Taint tracking for Ethereum.
 
 Simple web interface:
 
-![](https://raw.githubusercontent.com/wiki/jestcrows/ethtaint/image/WebInterface2.png)
+![](https://raw.githubusercontent.com/wiki/jestcrows/ethtaint/image/WebInterface3.png)
 
 Command line interface:
 
