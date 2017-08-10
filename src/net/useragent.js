@@ -1,6 +1,6 @@
 /**
  * @file The ethtaint user agent string.
- * @module util/useragent
+ * @module net/useragent
  */
 
 'use strict'
