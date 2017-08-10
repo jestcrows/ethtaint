@@ -175,6 +175,27 @@ async function writeFile (filePath, data) {
 }
 
 /**
+ * Delete all matching lines from file.
+ * @todo Improve efficiency of this procedure.
+ * @param {string} filePath - Path to file.
+ * @param {string} deleteLine - Line text to delete.
+ * @return {undefined}
+ */
+async function deleteFileLine (filePath, deleteLine) {
+  const fileData = await readFile(filePath)
+  const fileLines = fileData.split('\n')
+  const newLines = []
+  for (let i = 0, line; i < fileLines.length; i++) {
+    line = fileLines[i]
+    if (line !== deleteLine) {
+      newLines.append(line)
+    }
+  }
+  const newData = newLines.join('\n')
+  await writeFile(filePath, newData)
+}
+
+/**
  * Initialize save.
  * @param {string} sourceHex - Hex representation of taint source address.
  * @param {number} startBlock - Start block of tainting.
@@ -235,7 +256,6 @@ async function recordTraced (sourceHex, startBlock, addressHex) {
 
 /**
  * Delete address traced.
- * @todo Improve efficiency of this procedure.
  * @param {string} sourceHex - Hex representation of source address.
  * @param {number} startBlock - Start block of tainting.
  * @param {string} addressHex - Hex representation of address needing new tracing.
@@ -243,17 +263,22 @@ async function recordTraced (sourceHex, startBlock, addressHex) {
  */
 async function deleteTraced (sourceHex, startBlock, addressHex) {
   const filePath = 'trace/' + sourceHex + '-' + startBlock + '/traced'
-  const fileData = await readFile(filePath)
-  const fileLines = fileData.split('\n')
-  const newLines = []
-  for (let i = 0, line; i < fileLines.length; i++) {
-    line = fileLines[i]
-    if (line !== addressHex) {
-      newLines.append(line)
-    }
-  }
-  const newData = newLines.join('\n')
-  await writeFile(filePath, newData)
+  const line = addressHex
+  await deleteFileLine(filePath, line)
+}
+
+/**
+ * Delete address tainted.
+ * @param {string} sourceHex - Hex representation of source address.
+ * @param {number} startBlock - Start block of tainting.
+ * @param {string} addressHex - Hex representation of address to delete.
+ * @param {number} fromBlock - Start block of address to delete.
+ * @return {undefined}
+ */
+async function deleteTainted (sourceHex, startBlock, addressHex, fromBlock) {
+  const filePath = 'trace/' + sourceHex + '-' + startBlock + '/tainted'
+  const line = addressHex + '|' + fromBlock
+  await deleteFileLine(filePath, line)
 }
 
 /**
@@ -298,8 +323,11 @@ async function processTransaction (
 
   // Already tainted
   if (tx.to.hasTaint(taint)) {
-    if (taintedFrom.get(tx.to) > tx.block.number) {
+    const fromBlock = taintedFrom.get(tx.to)
+    if (fromBlock > tx.block.number) {
       taintedFrom.set(tx.to, tx.block.number)
+      await deleteTainted(source.hex, sourceStartBlock, tx.to.hex, fromBlock)
+      await recordTainted(source.hex, sourceStartBlock, tx.to.hex, tx.block.number)
       traced.delete(tx.to)
       await deleteTraced(source.hex, sourceStartBlock, tx.to.hex)
       tracker.emit('reopenTrace', tx.to, taint)
