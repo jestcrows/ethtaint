@@ -146,7 +146,7 @@ async function createEmptyFile (filePath) {
  */
 async function readFile (filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
         reject(err)
       } else {
@@ -308,6 +308,7 @@ async function processTransaction (
   }
 
   // Record tainted
+  taint.addRecipient(tx.to)
   tx.to.addTaint(taint)
   taintedFrom.set(tx.ot, tx.block.number)
   await recordTainted(source.hex, sourceStartBlock, tx.to.hex, tx.block.number)
@@ -442,7 +443,54 @@ class Tracker extends EventEmitter {
 
       // Trace saving
       if (await saveExists(sourceHex, startBlock)) {
-        throw new Error('Trace resuming not yet implemented')
+        const dirPath = 'trace/' + sourceHex + '-' + startBlock
+        const taintedFilePath = dirPath + '/tainted'
+        const taintedFileData = await readFile(taintedFilePath)
+        const taintedFileLines = taintedFileData.split('\n')
+        for (
+          let i = 1, line, fields,
+            addressHex, address,
+            fromBlockString, fromBlock;
+          i < taintedFileLines.length;
+          i++
+        ) {
+          line = taintedFileLines[i]
+          if (!line) continue
+          fields = line.split('|')
+          addressHex = fields[0]
+          address = await cache.address.get(addressHex)
+          if (address === undef) {
+            address = new Address(addressHex)
+            await cache.address.set(addressHex, address)
+          }
+          address.addTaint(taint)
+          taint.addRecipient(address)
+          tainted.add(address)
+          fromBlockString = fields[1]
+          fromBlock = Number.parseInt(fromBlockString)
+          taintedFrom.set(address, fromBlock)
+          this.emit('taint', address, taint)
+        }
+        const tracedFilePath = dirPath + '/traced'
+        const tracedFileData = await readFile(tracedFilePath)
+        const tracedFileLines = tracedFileData.split('\n')
+        for (
+          let i = 0, line,
+            addressHex, address;
+          i < tracedFileLines.length;
+          i++
+        ) {
+          line = tracedFileLines[i]
+          if (!line) continue
+          addressHex = line
+          address = await cache.address.get(addressHex)
+          if (address === undef) {
+            address = new Address(addressHex)
+            await cache.address.set(addressHex, address)
+          }
+          traced.add(address)
+          this.emit('tracedAddress', address)
+        }
       } else {
         await initializeSave(sourceHex, startBlock)
       }
