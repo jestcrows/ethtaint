@@ -34,6 +34,7 @@
     // Stopped
     function stopped () {
       sourceEl.disabled = false
+      startBlockEl.disabled = false
       traceEl.disabled = false
       stopEl.disabled = true
     }
@@ -41,6 +42,7 @@
     // Started
     function started () {
       sourceEl.disabled = true
+      startBlockEl.disabled = true
       traceEl.disabled = true
       stopEl.disabled = false
     }
